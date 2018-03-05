@@ -1,3 +1,12 @@
-<p>
-  device-list works!
-</p>
+<h2>List of Devices</h2>
+
+<table style="width:100%">
+  <tr>
+    <th>Serial</th>
+    <th>Production Date</th>
+  </tr>
+  <tr *ngFor="let device of deviceList">
+    <td><a routerLink="/entries/{{device.id}}">{{device.id}}</a></td>
+    <td>{{device.production_date}}</td>
+  </tr>
+</table>

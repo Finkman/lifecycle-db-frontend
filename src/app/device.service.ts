@@ -9,7 +9,8 @@ import { Device, DeviceEntry } from './device';
 @Injectable()
 export class DeviceService {
 
-  private entriesUrl = 'api/entries';  // URL to web api
+  private entriesUrl = 'api/entries';
+  private devicesUrl = 'api/devices';
 
   constructor(private http: HttpClient) { }
 
@@ -33,11 +34,19 @@ export class DeviceService {
 
   public getDeviceEntries(id: number): Observable<DeviceEntry[]> {
     const url = `${this.entriesUrl}/?deviceId=${id}`;
-
     return this.http.get<DeviceEntry[]>(url).pipe(
       tap(heroes => this.log(`fetched device entrires`)),
       catchError(this.handleError('getDeviceEntries', []))
     );
+  }
+
+  public getDeviceList(): Observable<Device[]>{
+    const url = `${this.devicesUrl}`;
+    return this.http.get<Device[]>(url).pipe(
+      tap(devices => this.log(`fetched devices`)),
+      catchError(this.handleError('getDeviceList', []))
+    );
+
   }
 
 }
