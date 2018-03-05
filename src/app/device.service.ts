@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
-import { Device, DeviceEntry } from './device';
+import { Device, DeviceEntry, DeviceSummary } from './device';
 
 @Injectable()
 export class DeviceService {

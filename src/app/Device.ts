@@ -24,5 +24,5 @@ export class Device {
 export class DeviceSummary {
   device: Device;
   hwVersion: string;
-  swVersion: string;
+  fwVersion: string;
 }
