@@ -10,12 +10,14 @@ import { DeviceEntriesComponent } from './device-entries/device-entries.componen
 import { AppRoutingModule } from './/app-routing.module';
 
 import { DeviceService } from './device.service';
+import { DeviceListComponent } from './device-list/device-list.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    DeviceEntriesComponent
+    DeviceEntriesComponent,
+    DeviceListComponent
   ],
   imports: [
     BrowserModule, HttpClientModule, HttpClientInMemoryWebApiModule.forRoot(
