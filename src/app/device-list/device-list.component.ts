@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { DeviceService } from '../device.service';
-import { Device } from '../device';
+import { DeviceSummary, Device } from '../device';
 
 @Component({
   selector: 'app-device-list',
@@ -9,7 +9,7 @@ import { Device } from '../device';
   styleUrls: ['./device-list.component.css']
 })
 export class DeviceListComponent implements OnInit {
-  deviceList: Device[];
+  deviceList: DeviceSummary[];
 
   constructor(private deviceService: DeviceService) { }
 

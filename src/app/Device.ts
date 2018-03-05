@@ -20,3 +20,9 @@ export class Device {
   id: number;
   production_date: Date;
 }
+
+export class DeviceSummary {
+  device: Device;
+  hwVersion: string;
+  swVersion: string;
+}

@@ -40,9 +40,9 @@ export class DeviceService {
     );
   }
 
-  public getDeviceList(): Observable<Device[]>{
+  public getDeviceList(): Observable<DeviceSummary[]> {
     const url = `${this.devicesUrl}`;
-    return this.http.get<Device[]>(url).pipe(
+    return this.http.get<DeviceSummary[]>(url).pipe(
       tap(devices => this.log(`fetched devices`)),
       catchError(this.handleError('getDeviceList', []))
     );

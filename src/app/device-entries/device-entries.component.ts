@@ -32,4 +32,8 @@ export class DeviceEntriesComponent implements OnInit {
     return EntryType[typeId];
   }
 
+  goBack(): void {
+    this.location.back();
+  }
+
 }

@@ -6,7 +6,7 @@
     <th>Production Date</th>
   </tr>
   <tr *ngFor="let device of deviceList">
-    <td><a routerLink="/entries/{{device.id}}">{{device.id}}</a></td>
+    <td><a routerLink="/entries/{{device.id}}">{{device.device.id}}</a></td>
     <td>{{device.production_date}}</td>
   </tr>
 </table>
