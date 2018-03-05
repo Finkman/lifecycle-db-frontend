@@ -1,0 +1,12 @@
+<h2>Device Entries for id {{this.deviceId}}</h2>
+
+<table style="width:100%">
+  <tr>
+    <th>Type</th>
+    <th>Date</th>
+  </tr>
+  <tr *ngFor="let entry of deviceEntries">
+    <td>{{getType(entry.type)}}</td>
+    <td>{{entry.date}}</td>
+  </tr>
+</table>

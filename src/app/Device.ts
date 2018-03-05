@@ -1,6 +1,6 @@
 
 
-enum EntryType {
+export enum EntryType {
   HwVersion = 1,
   SwVersion,
   Defect,

@@ -32,7 +32,7 @@ export class DeviceService {
   }
 
   public getDeviceEntries(id: number): Observable<DeviceEntry[]> {
-    const url = `${this.entriesUrl}/deviceId=${id}`;
+    const url = `${this.entriesUrl}/?deviceId=${id}`;
 
     return this.http.get<DeviceEntry[]>(url).pipe(
       tap(heroes => this.log(`fetched device entrires`)),
