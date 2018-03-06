@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -11,16 +12,18 @@ import { AppRoutingModule } from './/app-routing.module';
 
 import { DeviceService } from './device.service';
 import { DeviceListComponent } from './device-list/device-list.component';
+import { AddDeviceEntryComponent } from './add-device-entry/add-device-entry.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     DeviceEntriesComponent,
-    DeviceListComponent
+    DeviceListComponent,
+    AddDeviceEntryComponent
   ],
   imports: [
-    BrowserModule, HttpClientModule, HttpClientInMemoryWebApiModule.forRoot(
+    BrowserModule, FormsModule, HttpClientModule, HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
     ), AppRoutingModule
   ],

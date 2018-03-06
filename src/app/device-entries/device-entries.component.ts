@@ -14,10 +14,12 @@ import { Location } from '@angular/common';
 export class DeviceEntriesComponent implements OnInit {
   deviceEntries: DeviceEntry[];
   deviceId: number;
+  addEntryVisible: boolean;
 
   constructor(private deviceService: DeviceService, private location: Location, private route: ActivatedRoute, ) { }
 
   ngOnInit() {
+    this.addEntryVisible = false;
     this.getDeviceEntries();
   }
 
@@ -34,6 +36,10 @@ export class DeviceEntriesComponent implements OnInit {
 
   goBack(): void {
     this.location.back();
+  }
+
+  newEntry(): void {
+    this.addEntryVisible = true;
   }
 
 }
