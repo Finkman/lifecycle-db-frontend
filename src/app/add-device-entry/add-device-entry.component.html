@@ -5,7 +5,7 @@
     <div class="form-group">
       <label>Type</label>
       <select name="type" [(ngModel)]="model.type">
-       <option *ngFor="let x of typeNames" [value]="x">{{x}}</option>
+       <option *ngFor="let x of typeNames()" [value]="x">{{x}}</option>
       </select>
     </div>
 

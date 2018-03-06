@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 
-import { DeviceEntry } from '../device';
+import { DeviceEntry, EntryType } from '../device';
 
 @Component({
   selector: 'app-add-device-entry',
@@ -11,8 +11,6 @@ import { DeviceEntry } from '../device';
 export class AddDeviceEntryComponent implements OnInit {
 
   @Output() onAdded = new EventEmitter<boolean>();
-
-  typeNames = ["Test1", "Test2"];
 
   model: DeviceEntry;
 
@@ -30,6 +28,16 @@ export class AddDeviceEntryComponent implements OnInit {
   cancel() {
     this.model = new DeviceEntry();
     this.onAdded.emit(false);
+  }
+
+  typeNames(): Array<string> {
+    var names: string[] = [];
+    for (var n in EntryType) {
+      if (typeof EntryType[n] === 'number') {
+        names.push(n);
+      }
+    }
+    return names;
   }
 
 }
