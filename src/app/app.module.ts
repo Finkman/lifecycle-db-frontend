@@ -13,22 +13,21 @@ import { AppRoutingModule } from './/app-routing.module';
 import { DeviceService } from './device.service';
 import { DeviceListComponent } from './device-list/device-list.component';
 import { AddDeviceEntryComponent } from './add-device-entry/add-device-entry.component';
-import { EntryTypePipe } from './entry-type.pipe';
-import { DatePipe } from '@angular/common';
 
+import { DatePipe } from '@angular/common';
+import { OrderModule } from 'ngx-order-pipe'; // <- import OrderModule
 
 @NgModule({
   declarations: [
     AppComponent,
     DeviceEntriesComponent,
     DeviceListComponent,
-    AddDeviceEntryComponent,
-    EntryTypePipe
+    AddDeviceEntryComponent
   ],
   imports: [
     BrowserModule, FormsModule, HttpClientModule, HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
-    ), AppRoutingModule
+    ), AppRoutingModule, OrderModule
   ],
   providers: [DeviceService],
   bootstrap: [AppComponent]

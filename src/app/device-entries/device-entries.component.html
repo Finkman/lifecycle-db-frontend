@@ -1,16 +1,23 @@
 <h2>Device Entries for id {{this.deviceId}}</h2>
 <button class="btn" (click)="goBack()">&#8592;</button>
-<table style="width:100%">
-  <tr>
-    <th>Date</th>
-    <th>Type</th>
-    <th>What</th>
-  </tr>
-  <tr *ngFor="let entry of deviceEntries">
-    <td>{{entry.date | date:'medium'}}</td>
-    <td>{{entry.type}}</td>
-    <td>{{entry.data}}</td>
-  </tr>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th [class.active]="order === 'date'" (click)="setOrder('date')">Date <span [hidden]="reverse">▼</span
+          ><span [hidden]="!reverse">▲</span></th>
+      <th [class.active]="order === 'type'" (click)="setOrder('type')">Type <span [hidden]="reverse">▼</span
+          ><span [hidden]="!reverse">▲</span></th>
+      <th [class.active]="order === 'data'" (click)="setOrder('data')">What <span [hidden]="reverse">▼</span
+          ><span [hidden]="!reverse">▲</span></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let entry of deviceEntries | orderBy: order:reverse">
+      <td>{{entry.date | date:'yyyy-MM-dd HH:mm'}}</td>
+      <td>{{entry.type}}</td>
+      <td>{{entry.data}}</td>
+    </tr>
+  </tbody>
 </table>
 <button class="btn" *ngIf="!addEntryVisible" (click)="newEntry()">+</button>
 

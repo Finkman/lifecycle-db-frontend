@@ -12,8 +12,8 @@
     <p *ngIf="!tagsLoaded">Loading tags...</p>
 
     <div class="form-group" *ngIf="model.type && model.type != 'Shippment'">
-      <label>{{model.type | entryType}}</label>
-      <input name="data" [(ngModel)]="model.data" placeholder="{{model.data | entryType | lowercase}}" />
+      <label>{{model.type}}</label>
+      <input name="data" [(ngModel)]="model.data" placeholder="{{model.data | lowercase}}" />
     </div>
 
     <button (click)="cancel()" class="btn">Cancel</button>

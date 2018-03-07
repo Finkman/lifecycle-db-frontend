@@ -1,16 +1,24 @@
 <h2>List of Devices</h2>
 
-<table style="width:100%">
-  <tr>
-    <th>Serial</th>
-    <th>Production Date</th>
-    <th>Hardware</th>
-    <th>Firmware</th>
-  </tr>
-  <tr *ngFor="let device of deviceList">
-    <td><a routerLink="/entries/{{device.device.id}}">{{device.device.id}}</a></td>
-    <td>{{device.device.production_date | date:'medium'}}</td>
-    <td>{{device.hwVersion}}</td>
-    <td>{{device.fwVersion}}</td>
-  </tr>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th [class.active]="order === 'id'" (click)="setOrder('id')">Serial <span [hidden]="reverse">▼</span
+          ><span [hidden]="!reverse">▲</span></th>
+      <th [class.active]="order === 'production_date'" (click)="setOrder('production_date')">Production Date <span [hidden]="reverse">▼</span
+          ><span [hidden]="!reverse">▲</span></th>
+      <th [class.active]="order === 'hwVersion'" (click)="setOrder('hwVersion')">Hardware <span [hidden]="reverse">▼</span
+          ><span [hidden]="!reverse">▲</span></th>
+      <th [class.active]="order === 'fwVersion'" (click)="setOrder('fwVersion')">Firmware <span [hidden]="reverse">▼</span
+          ><span [hidden]="!reverse">▲</span></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let device of deviceList | orderBy: order:reverse">
+      <td><a routerLink="/entries/{{device.device.id}}">{{device.device.id}}</a></td>
+      <td>{{device.device.production_date | date:'yyyy-MM-dd HH:mm'}}</td>
+      <td>{{device.hwVersion}}</td>
+      <td>{{device.fwVersion}}</td>
+    </tr>
+  </tbody>
 </table>

@@ -6,17 +6,21 @@ import { DeviceService } from '../device.service';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
+import { OrderPipe } from 'ngx-order-pipe';
+
 @Component({
   selector: 'app-device-entries',
   templateUrl: './device-entries.component.html',
-  styleUrls: ['./device-entries.component.css']
+  styleUrls: ['./device-entries.component.scss']
 })
 export class DeviceEntriesComponent implements OnInit {
   deviceEntries: DeviceEntry[];
+  order: string = 'date';
+  reverse: boolean = false;
   deviceId: number;
   addEntryVisible: boolean;
 
-  constructor(private deviceService: DeviceService, private location: Location, private route: ActivatedRoute, ) { }
+  constructor(private orderPipe: OrderPipe, private deviceService: DeviceService, private location: Location, private route: ActivatedRoute, ) { }
 
   ngOnInit() {
     this.addEntryVisible = false;
@@ -44,6 +48,14 @@ export class DeviceEntriesComponent implements OnInit {
     }
 
     this.addEntryVisible = false;
+  }
+
+  setOrder(value: string) {
+    if (this.order === value) {
+      this.reverse = !this.reverse;
+    }
+
+    this.order = value;
   }
 
 }
