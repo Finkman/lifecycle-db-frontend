@@ -1,5 +1,5 @@
 <h2>Device Entries for id {{this.deviceId}}</h2>
-
+<button class="btn" (click)="goBack()">&#8592;</button>
 <table style="width:100%">
   <tr>
     <th>Date</th>
@@ -12,7 +12,6 @@
     <td>{{entry.data}}</td>
   </tr>
 </table>
-<button (click)="goBack()">Back</button>
-<button *ngIf="!addEntryVisible" (click)="newEntry()">+</button>
+<button class="btn" *ngIf="!addEntryVisible" (click)="newEntry()">+</button>
 
 <app-add-device-entry *ngIf="addEntryVisible" [deviceId]="deviceId" (onAdded)="onAdded($event)"></app-add-device-entry>

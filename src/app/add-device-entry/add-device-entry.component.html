@@ -14,7 +14,7 @@
       <input name="data" [(ngModel)]="model.data" placeholder="{{model.data | entryType | lowercase}}" />
     </div>
 
-    <button type="submit" class="btn btn-success">Submit</button>
+    <button (click)="cancel()" class="btn">Cancel</button>
+    <button type="submit " class="btn btn-success ">Submit</button>
   </form>
-  <label>Selected: {{model?.obj}}</label>
 </div>
