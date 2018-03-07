@@ -11,7 +11,7 @@
 
     <div class="form-group" *ngIf="model.type && model.type != 'Shippment'">
       <label>{{model.type | entryType}}</label>
-      <input name="obj" [(ngModel)]="model.obj" placeholder="{{model.type | entryType | lowercase}}" />
+      <input name="data" [(ngModel)]="model.data" placeholder="{{model.data | entryType | lowercase}}" />
     </div>
 
     <button type="submit" class="btn btn-success">Submit</button>

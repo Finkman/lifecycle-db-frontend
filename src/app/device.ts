@@ -13,7 +13,7 @@ export class DeviceEntry {
   deviceId: number;
   date: Date;
   type: EntryType;
-  obj: Object;
+  data: string;
 }
 
 

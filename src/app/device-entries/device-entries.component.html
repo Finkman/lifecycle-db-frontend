@@ -2,12 +2,14 @@
 
 <table style="width:100%">
   <tr>
-    <th>Type</th>
     <th>Date</th>
+    <th>Type</th>
+    <th>What</th>
   </tr>
   <tr *ngFor="let entry of deviceEntries">
-    <td>{{getType(entry.type)}}</td>
     <td>{{entry.date | date:'medium'}}</td>
+    <td>{{getType(entry.type)}}</td>
+    <td>{{entry.data}}</td>
   </tr>
 </table>
 <button (click)="goBack()">Back</button>
