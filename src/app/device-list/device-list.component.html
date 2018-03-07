@@ -9,7 +9,7 @@
   </tr>
   <tr *ngFor="let device of deviceList">
     <td><a routerLink="/entries/{{device.device.id}}">{{device.device.id}}</a></td>
-    <td>{{device.device.production_date}}</td>
+    <td>{{device.device.production_date | date:'medium'}}</td>
     <td>{{device.hwVersion}}</td>
     <td>{{device.fwVersion}}</td>
   </tr>
