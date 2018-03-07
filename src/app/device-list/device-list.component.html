@@ -3,7 +3,7 @@
 <table class="table table-hover">
   <thead>
     <tr>
-      <th [class.active]="order === 'id'" (click)="setOrder('id')">Serial <span [hidden]="reverse">▼</span
+      <th [class.active]="order === 'sn'" (click)="setOrder('sn')">S/N <span [hidden]="reverse">▼</span
           ><span [hidden]="!reverse">▲</span></th>
       <th [class.active]="order === 'production_date'" (click)="setOrder('production_date')">Production Date <span [hidden]="reverse">▼</span
           ><span [hidden]="!reverse">▲</span></th>
@@ -15,8 +15,8 @@
   </thead>
   <tbody>
     <tr *ngFor="let device of deviceList | orderBy: order:reverse">
-      <td><a routerLink="/entries/{{device.device.id}}">{{device.device.id}}</a></td>
-      <td>{{device.device.production_date | date:'yyyy-MM-dd HH:mm'}}</td>
+      <td><a routerLink="/entries/{{device.id}}">{{device.sn}}</a></td>
+      <td>{{device.production_date | date:'yyyy-MM-dd HH:mm'}}</td>
       <td>{{device.hwVersion}}</td>
       <td>{{device.fwVersion}}</td>
     </tr>

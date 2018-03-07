@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
-import { Device, DeviceEntry, DeviceSummary } from './device';
+import { Device, DeviceEntry } from './device';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -45,9 +45,17 @@ export class DeviceService {
     );
   }
 
-  getDeviceList(): Observable<DeviceSummary[]> {
+  getDevice(id: number): Observable<Device> {
+    const url = `${this.devicesUrl}/${id}`;
+    return this.http.get<Device>(url).pipe() /*
+      tap(d => this.log(`fetched device`)),
+      catchError(this.handleError('getDevice @id: ${id}', []))
+    );*/
+  }
+
+  getDeviceList(): Observable<Device[]> {
     const url = this.devicesUrl;
-    return this.http.get<DeviceSummary[]>(url).pipe(
+    return this.http.get<Device[]>(url).pipe(
       tap(devices => this.log(`fetched devices`)),
       catchError(this.handleError('getDeviceList', []))
     );

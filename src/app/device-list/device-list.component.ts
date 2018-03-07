@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { DeviceService } from '../device.service';
-import { DeviceSummary, Device } from '../device';
+import { Device } from '../device';
 import { OrderPipe } from 'ngx-order-pipe';
 
 @Component({
@@ -10,8 +10,8 @@ import { OrderPipe } from 'ngx-order-pipe';
   styleUrls: ['./device-list.component.scss']
 })
 export class DeviceListComponent implements OnInit {
-  deviceList: DeviceSummary[];
-  order: string = 'id';
+  deviceList: Device[];
+  order: string = 'sn';
   reverse: boolean = true;
 
   constructor(private orderPipe: OrderPipe, private deviceService: DeviceService) { }

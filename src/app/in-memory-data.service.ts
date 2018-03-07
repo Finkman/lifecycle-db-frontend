@@ -20,15 +20,13 @@ export class InMemoryDataService implements InMemoryDbService {
 
     const devices = [
       {
-        device:
-          { id: 1, production_date: "2017-05-12 13:44:00" },
+        id: 1, sn: 2011, production_date: "2017-05-12 13:44:00",
         hwVersion: "V1.4",
         fwVersion: "V1.3.1"
       },
       {
-        device:
-          { id: 2, production_date: "2017-08-20 23:33:10" },
-        hwVersion: "V1.4",
+        id: 2, sn: 2012, production_date: "2017-08-20 23:33:10",
+        hwVersion: "V2.0",
         fwVersion: "V1.3.2"
       }
     ];

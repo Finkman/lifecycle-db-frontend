@@ -19,11 +19,8 @@ export class DeviceEntry {
 
 export class Device {
   id: number;
+  sn: number;
   production_date: Date;
-}
-
-export class DeviceSummary {
-  device: Device;
   hwVersion: string;
   fwVersion: string;
 }

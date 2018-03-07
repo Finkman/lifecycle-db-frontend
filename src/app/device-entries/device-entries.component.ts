@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { DeviceEntry } from '../device';
+import { DeviceEntry, Device } from '../device';
 import { DeviceService } from '../device.service';
 
 import { ActivatedRoute } from '@angular/router';
@@ -18,20 +18,28 @@ export class DeviceEntriesComponent implements OnInit {
   order: string = 'date';
   reverse: boolean = false;
   deviceId: number;
+  parentDevice: Device;
+
   addEntryVisible: boolean;
 
   constructor(private orderPipe: OrderPipe, private deviceService: DeviceService, private location: Location, private route: ActivatedRoute, ) { }
 
   ngOnInit() {
     this.addEntryVisible = false;
+    this.deviceId = +this.route.snapshot.paramMap.get('deviceId');
+    this.getDevice();
     this.getDeviceEntries();
   }
 
-  public getDeviceEntries(): void {
-    this.deviceId = +this.route.snapshot.paramMap.get('deviceId');
-    console.log(this.deviceId);
+  getDeviceEntries(): void {
     this.deviceService.getDeviceEntries(this.deviceId).
       subscribe(entries => this.deviceEntries = entries);
+  }
+
+  getDevice(): void {
+    console.log(this.deviceId);
+    this.deviceService.getDevice(this.deviceId)
+      .subscribe(d => this.parentDevice = d);
   }
 
   goBack(): void {
