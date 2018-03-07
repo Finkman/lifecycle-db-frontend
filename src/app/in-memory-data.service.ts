@@ -12,7 +12,7 @@ export class InMemoryDataService implements InMemoryDbService {
       { id: 17, deviceId: 1, date: "2017-05-12 13:44:00", type: 4 },
       { id: 18, deviceId: 1, date: "2017-05-12 13:44:00", type: 4 },
       { id: 19, deviceId: 1, date: "2017-05-12 13:44:00", type: 5, data: "Reserve" },
-      { id: 20, deviceId: 1, date: "2017-05-12 13:44:00", type: 2 data: "V1.3.4" },
+      { id: 20, deviceId: 1, date: "2017-05-12 13:44:00", type: 2, data: "V1.3.4" },
       { id: 21, deviceId: 2, date: "2017-05-12 13:44:00", type: 1, data: "V1.4.1" }
     ];
 

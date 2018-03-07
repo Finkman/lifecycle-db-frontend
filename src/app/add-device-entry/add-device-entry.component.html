@@ -1,6 +1,6 @@
 <h3>New Device Entry for S/N {{deviceId}}</h3>
 <div>
-  <form (ngSubmit)="onSubmit()" #entryForm="ngForm">
+  <form *ngIf="!isLocked" (ngSubmit)="onSubmit()" #entryForm="ngForm">
 
     <div class="form-group">
       <label>Type</label>
@@ -17,4 +17,5 @@
     <button (click)="cancel()" class="btn">Cancel</button>
     <button type="submit " class="btn btn-success ">Submit</button>
   </form>
+  <div *ngIf="isLocked"><label>Please wait...</label></div>
 </div>
