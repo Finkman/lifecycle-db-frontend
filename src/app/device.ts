@@ -2,7 +2,7 @@
 
 export enum EntryType {
   HwVersion = 1,
-  SwVersion,
+  FwVersion,
   Defect,
   Shippment,
   Remark
@@ -10,6 +10,7 @@ export enum EntryType {
 
 export class DeviceEntry {
   id: number;
+  deviceId: number;
   date: Date;
   type: EntryType;
   obj: Object;

@@ -42,4 +42,12 @@ export class DeviceEntriesComponent implements OnInit {
     this.addEntryVisible = true;
   }
 
+  onAdded(success: boolean) {
+    if (success) {
+      this.getDeviceEntries();
+    }
+
+    this.addEntryVisible = false;
+  }
+
 }

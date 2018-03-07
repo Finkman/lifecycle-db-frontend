@@ -13,6 +13,7 @@ import { AppRoutingModule } from './/app-routing.module';
 import { DeviceService } from './device.service';
 import { DeviceListComponent } from './device-list/device-list.component';
 import { AddDeviceEntryComponent } from './add-device-entry/add-device-entry.component';
+import { EntryTypePipe } from './entry-type.pipe';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { AddDeviceEntryComponent } from './add-device-entry/add-device-entry.com
     AppComponent,
     DeviceEntriesComponent,
     DeviceListComponent,
-    AddDeviceEntryComponent
+    AddDeviceEntryComponent,
+    EntryTypePipe
   ],
   imports: [
     BrowserModule, FormsModule, HttpClientModule, HttpClientInMemoryWebApiModule.forRoot(

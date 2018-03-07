@@ -13,4 +13,4 @@
 <button (click)="goBack()">Back</button>
 <button *ngIf="!addEntryVisible" (click)="newEntry()">+</button>
 
-<app-add-device-entry *ngIf="addEntryVisible"></app-add-device-entry>
+<app-add-device-entry *ngIf="addEntryVisible" [deviceId]="deviceId" (onAdded)="onAdded($event)"></app-add-device-entry>

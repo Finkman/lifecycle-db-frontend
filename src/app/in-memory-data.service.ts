@@ -3,7 +3,7 @@ import { InMemoryDbService } from 'angular-in-memory-web-api';
 export class InMemoryDataService implements InMemoryDbService {
   createDb() {
     const entries = [
-      { id: 11, deviceId: 1, date: "12-05-2017 13:44:00", type: 1 },
+      { id: 11, deviceId: 1, date: new Date("12-05-2017 13:44:00"), type: 1 },
       { id: 12, deviceId: 1, date: "13-05-2017 13:44:00", type: 2 },
       { id: 13, deviceId: 1, date: "14-05-2017 13:44:00", type: 3 },
       { id: 14, deviceId: 1, date: "15-05-2017 13:44:00", type: 2 },

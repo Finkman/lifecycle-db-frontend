@@ -6,6 +6,10 @@ import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Device, DeviceEntry, DeviceSummary } from './device';
 
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
+
 @Injectable()
 export class DeviceService {
 
@@ -32,7 +36,7 @@ export class DeviceService {
     //this.logService.log(new LogMessage('DeviceService', message));
   }
 
-  public getDeviceEntries(id: number): Observable<DeviceEntry[]> {
+  getDeviceEntries(id: number): Observable<DeviceEntry[]> {
     const url = `${this.entriesUrl}/?deviceId=${id}`;
     return this.http.get<DeviceEntry[]>(url).pipe(
       tap(heroes => this.log(`fetched device entrires`)),
@@ -40,13 +44,21 @@ export class DeviceService {
     );
   }
 
-  public getDeviceList(): Observable<DeviceSummary[]> {
+  getDeviceList(): Observable<DeviceSummary[]> {
     const url = `${this.devicesUrl}`;
     return this.http.get<DeviceSummary[]>(url).pipe(
       tap(devices => this.log(`fetched devices`)),
       catchError(this.handleError('getDeviceList', []))
     );
 
+  }
+
+  addDeviceEntry(entry: DeviceEntry): Observable<DeviceEntry> {
+    return this.http.post<DeviceEntry>(this.entriesUrl, entry, httpOptions)
+      .pipe(
+        tap(entry => this.log(`added entry w/ id=${entry.id}`)),
+        catchError(this.handleError<DeviceEntry>('addDeviceEntry'))
+      );
   }
 
 }
