@@ -12,7 +12,7 @@ export class DeviceEntry {
   id: number;
   deviceId: number;
   date: Date;
-  type: EntryType;
+  type: string;
   data: string;
 }
 

@@ -8,7 +8,7 @@
   </tr>
   <tr *ngFor="let entry of deviceEntries">
     <td>{{entry.date | date:'medium'}}</td>
-    <td>{{getType(entry.type)}}</td>
+    <td>{{entry.type}}</td>
     <td>{{entry.data}}</td>
   </tr>
 </table>

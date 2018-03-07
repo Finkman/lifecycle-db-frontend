@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { DeviceEntry, EntryType } from '../device';
+import { DeviceEntry } from '../device';
 import { DeviceService } from '../device.service';
 
 import { ActivatedRoute } from '@angular/router';
@@ -28,10 +28,6 @@ export class DeviceEntriesComponent implements OnInit {
     console.log(this.deviceId);
     this.deviceService.getDeviceEntries(this.deviceId).
       subscribe(entries => this.deviceEntries = entries);
-  }
-
-  getType(typeId: number): any {
-    return EntryType[typeId];
   }
 
   goBack(): void {

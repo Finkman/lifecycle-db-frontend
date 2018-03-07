@@ -14,20 +14,31 @@ export class AddDeviceEntryComponent implements OnInit {
   @Input() deviceId: number;
   @Output() onAdded = new EventEmitter<boolean>();
 
+  typeNames: string[] = [];
   model: DeviceEntry;
   isLocked: boolean = false;
+  tagsLoaded: boolean = false;
 
 
   constructor(private deviceService: DeviceService, ) { }
 
   ngOnInit() {
+    this.getEntryTypes();
     this.model = new DeviceEntry();
     this.model.deviceId = this.deviceId;
+    this.model.type = "";
+  }
+
+  getEntryTypes() {
+    this.deviceService.getEntryTypes().subscribe(
+      (list) => {
+        this.typeNames = list;
+        this.tagsLoaded = true;
+      }
+    );
   }
 
   onSubmit() {
-    // do magic
-    //this.onAdded.emit(true);
     this.isLocked = true;
     this.model.date = new Date(Date.now());
     this.deviceService.addDeviceEntry(this.model).subscribe(res => {
@@ -42,17 +53,6 @@ export class AddDeviceEntryComponent implements OnInit {
     this.model = new DeviceEntry();
     this.onAdded.emit(false);
   }
-
-  typeNames(): Array<[string, number]> {
-    var names: [string, number][] = [];
-    for (var n in EntryType) {
-      if (typeof EntryType[n] === 'number') {
-        names.push([n, +EntryType[n]]);
-      }
-    }
-    return names;
-  }
-
 
 
 }

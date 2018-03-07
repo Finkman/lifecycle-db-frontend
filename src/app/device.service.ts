@@ -15,6 +15,7 @@ export class DeviceService {
 
   private entriesUrl = 'api/entries';
   private devicesUrl = 'api/devices';
+  private entryTypesUrl = 'api/entryTypes';
 
   constructor(private http: HttpClient) { }
 
@@ -45,12 +46,20 @@ export class DeviceService {
   }
 
   getDeviceList(): Observable<DeviceSummary[]> {
-    const url = `${this.devicesUrl}`;
+    const url = this.devicesUrl;
     return this.http.get<DeviceSummary[]>(url).pipe(
       tap(devices => this.log(`fetched devices`)),
       catchError(this.handleError('getDeviceList', []))
     );
 
+  }
+
+  getEntryTypes(): Observable<string[]> {
+    const url = this.entryTypesUrl;
+    return this.http.get<string[]>(url).pipe(
+      tap(list => this.log('fetch entryTypes')),
+      catchError(this.handleError('getEntryTypes', []))
+    );
   }
 
   addDeviceEntry(entry: DeviceEntry): Observable<DeviceEntry> {
