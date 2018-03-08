@@ -2,7 +2,10 @@ import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 
 import { DeviceEntry, EntryType } from '../device';
 import { DeviceService } from '../device.service';
-
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs/Observable';
+import { startWith } from 'rxjs/operators/startWith';
+import { map } from 'rxjs/operators/map';
 
 
 @Component({
@@ -17,6 +20,17 @@ export class AddDeviceEntryComponent implements OnInit {
   @Output() onAdded = new EventEmitter<boolean>();
 
   typeNames: string[] = [];
+
+  dataInputControl: FormControl = new FormControl();
+
+  dataOptions = [
+    'V1.3.0',
+    'V1.3.1',
+    'V1.4.3'
+  ];
+
+  filteredOptions: Observable<string[]>;
+
   model: DeviceEntry;
   isLocked: boolean = false;
   tagsLoaded: boolean = false;
@@ -30,6 +44,16 @@ export class AddDeviceEntryComponent implements OnInit {
     this.model.date = new Date(Date.now());
     this.model.deviceId = this.deviceId;
     this.model.type = this.typeNames[0];
+    this.filteredOptions = this.dataInputControl.valueChanges
+      .pipe(
+        startWith(''),
+        map(val => this.filter(val))
+      );
+  }
+
+  filter(val: string): string[] {
+    return this.dataOptions.filter(option =>
+      option.toLowerCase().indexOf(val.toLowerCase()) === 0);
   }
 
   getEntryTypes() {

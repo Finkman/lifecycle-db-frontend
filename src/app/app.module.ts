@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
@@ -18,7 +18,7 @@ import { AddDeviceEntryComponent } from './add-device-entry/add-device-entry.com
 import { DatePipe } from '@angular/common';
 import { OrderModule } from 'ngx-order-pipe'; // <- import OrderModule
 
-import { MatInputModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
+import { MatInputModule, MatAutocompleteModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -28,9 +28,9 @@ import { MatInputModule, MatSelectModule, MatDatepickerModule, MatNativeDateModu
     AddDeviceEntryComponent
   ],
   imports: [
-    BrowserModule, BrowserAnimationsModule, FormsModule, HttpClientModule, HttpClientInMemoryWebApiModule.forRoot(
+    BrowserModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule, HttpClientModule, HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
-    ), AppRoutingModule, OrderModule, MatInputModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule
+    ), AppRoutingModule, OrderModule, MatInputModule, MatAutocompleteModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule
   ],
   providers: [DeviceService, FormsModule],
   bootstrap: [AppComponent]
