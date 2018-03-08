@@ -3,6 +3,8 @@ import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { DeviceEntry, EntryType } from '../device';
 import { DeviceService } from '../device.service';
 
+
+
 @Component({
   selector: 'app-add-device-entry',
   templateUrl: './add-device-entry.component.html',

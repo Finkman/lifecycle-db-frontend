@@ -18,7 +18,7 @@ export class DeviceEntriesComponent implements OnInit {
   order: string = 'date';
   reverse: boolean = false;
   deviceId: number;
-  parentDevice: Device;
+  parentDevice: Device = new Device();
 
   addEntryVisible: boolean;
 

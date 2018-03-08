@@ -16,6 +16,12 @@
       <input name="data" [(ngModel)]="model.data" placeholder="{{model.data | lowercase}}" />
     </div>
 
+    <div class="form-group">
+      <label>date</label>
+      <input [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
+      <owl-date-time #dt></owl-date-time>
+    </div>
+
     <button (click)="cancel()" class="btn">Cancel</button>
     <button type="submit " class="btn btn-success ">Submit</button>
   </form>
