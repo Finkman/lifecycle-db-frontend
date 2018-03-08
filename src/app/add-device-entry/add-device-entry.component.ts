@@ -27,6 +27,7 @@ export class AddDeviceEntryComponent implements OnInit {
   ngOnInit() {
     this.getEntryTypes();
     this.model = new DeviceEntry();
+    this.model.date = new Date(Date.now());
     this.model.deviceId = this.deviceId;
     this.model.type = "";
   }
@@ -42,7 +43,6 @@ export class AddDeviceEntryComponent implements OnInit {
 
   onSubmit() {
     this.isLocked = true;
-    this.model.date = new Date(Date.now());
     this.deviceService.addDeviceEntry(this.model).subscribe(res => {
       this.onAdded.emit(true);
       this.isLocked = true;

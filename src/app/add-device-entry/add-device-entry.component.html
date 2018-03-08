@@ -18,7 +18,7 @@
 
     <div class="form-group">
       <label>date</label>
-      <input [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
+      <input name="date" [owlDateTimeTrigger]="dt" [owlDateTime]="dt" [(ngModel)]="model.date">
       <owl-date-time #dt></owl-date-time>
     </div>
 
