@@ -29,7 +29,7 @@ export class AddDeviceEntryComponent implements OnInit {
     this.model = new DeviceEntry();
     this.model.date = new Date(Date.now());
     this.model.deviceId = this.deviceId;
-    this.model.type = "";
+    this.model.type = this.typeNames[0];
   }
 
   getEntryTypes() {

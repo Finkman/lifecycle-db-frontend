@@ -1,26 +1,25 @@
 <h3>New Entry</h3>
 <div>
-  <form *ngIf="!isLocked" (ngSubmit)="onSubmit()" #entryForm="ngForm">
+  <form class="form-box" *ngIf="!isLocked" (ngSubmit)="onSubmit()" #entryForm="ngForm">
 
-    <div class="form-group" *ngIf="tagsLoaded">
-      <label>Type</label>
-      <select name="type" [(ngModel)]="model.type">
-       <option  value="" disabled selected>Select type</option>
-       <option *ngFor="let x of typeNames" [value]="x">{{x}}</option>
-      </select>
-    </div>
+    <mat-form-field class="row-full-width" *ngIf="tagsLoaded">
+      <mat-select name="type" placeholder="Entry Type" [(ngModel)]="model.type">
+        <mat-option *ngFor="let x of typeNames" [value]="x">{{ x }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
     <p *ngIf="!tagsLoaded">Loading tags...</p>
 
-    <div class="form-group" *ngIf="model.type && model.type != 'Shippment'">
-      <label>{{model.type}}</label>
-      <input name="data" [(ngModel)]="model.data" placeholder="{{model.data | lowercase}}" />
-    </div>
+    <mat-form-field class="row-full-width">
+      <input name="data" matInput placeholder="{{model.type}}" [(ngModel)]="model.data">
+    </mat-form-field>
 
-    <div class="form-group">
-      <label>date</label>
-      <input name="date" [owlDateTimeTrigger]="dt" [owlDateTime]="dt" [(ngModel)]="model.date">
-      <owl-date-time #dt></owl-date-time>
-    </div>
+    <mat-form-field class="row-full-width">
+      <input name="date" matInput [matDatepicker]="dp2" placeholder="Date" [(ngModel)]="model.date">
+      <mat-datepicker-toggle matSuffix [for]="dp2"></mat-datepicker-toggle>
+      <mat-datepicker #dp2></mat-datepicker>
+    </mat-form-field>
 
     <button (click)="cancel()" class="btn">Cancel</button>
     <button type="submit " class="btn btn-success ">Submit</button>

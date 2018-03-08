@@ -13,7 +13,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let entry of deviceEntries | orderBy: order:reverse">
-      <td>{{entry.date | date:'yyyy-MM-dd HH:mm'}}</td>
+      <td>{{entry.date | date:'yyyy-MM-dd'}}</td>
       <td>{{entry.type}}</td>
       <td>{{entry.data}}</td>
     </tr>

@@ -18,20 +18,7 @@ import { AddDeviceEntryComponent } from './add-device-entry/add-device-entry.com
 import { DatePipe } from '@angular/common';
 import { OrderModule } from 'ngx-order-pipe'; // <- import OrderModule
 
-import { OwlDateTimeModule, OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
-import { OwlMomentDateTimeModule } from 'ng-pick-datetime-moment';
-
-// See the Moment.js docs for the meaning of these formats:
-// https://momentjs.com/docs/#/displaying/format/
-export const MY_MOMENT_FORMATS = {
-  parseInput: 'DD-MM-YYYY HH:mm:ss',
-  fullPickerInput: 'DD-MM-YYYY HH:mm:ss',
-  datePickerInput: 'l',
-  timePickerInput: 'LT',
-  monthYearLabel: 'MMM YYYY',
-  dateA11yLabel: 'LL',
-  monthYearA11yLabel: 'MMMM YYYY',
-};
+import { MatInputModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -43,9 +30,9 @@ export const MY_MOMENT_FORMATS = {
   imports: [
     BrowserModule, BrowserAnimationsModule, FormsModule, HttpClientModule, HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
-    ), AppRoutingModule, OrderModule, OwlDateTimeModule, OwlMomentDateTimeModule
+    ), AppRoutingModule, OrderModule, MatInputModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule
   ],
-  providers: [DeviceService, FormsModule, { provide: OWL_DATE_TIME_FORMATS, useValue: MY_MOMENT_FORMATS }],
+  providers: [DeviceService, FormsModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
