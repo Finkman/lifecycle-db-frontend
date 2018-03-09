@@ -22,6 +22,7 @@ export class AddDeviceEntryComponent implements OnInit {
   typeNames: string[] = [];
 
   dataInputControl: FormControl = new FormControl();
+  typeSelectControl: FormControl = new FormControl();
 
   dataOptions = [];
 
@@ -46,9 +47,23 @@ export class AddDeviceEntryComponent implements OnInit {
         map(val => this.filter(val))
       );
 
-    this.deviceService.getFwVersions().subscribe(
+    this.typeSelectControl.valueChanges.subscribe(
+      val => {
+        console.log(`Changed to ${val}`);
+        this.getDataTypeTags();
+      }
+    );
+  }
+
+  getDataTypeTags() {
+    console.log(`Get DataTags for ${this.model.type}`);
+    this.deviceService.getDataTags(this.model.type).subscribe(
       (list) => {
-        this.dataOptions = list;
+        let newList: string[] = [];
+        for (let tuple of list) {
+          newList.push(tuple.data);
+        }
+        this.dataOptions = newList;
         // retrigger option load and clear field
         this.dataInputControl.setValue('');
       }

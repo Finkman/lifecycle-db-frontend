@@ -3,7 +3,7 @@
   <form class="form-box" *ngIf="!isLocked" (ngSubmit)="onSubmit()" #entryForm="ngForm">
 
     <mat-form-field class="row-full-width" *ngIf="tagsLoaded">
-      <mat-select name="type" placeholder="Entry Type" [(ngModel)]="model.type">
+      <mat-select name="type" placeholder="Entry Type" [(ngModel)]="model.type" [formControl]="typeSelectControl">
         <mat-option *ngFor="let x of typeNames" [value]="x">{{ x }}</mat-option>
       </mat-select>
     </mat-form-field>

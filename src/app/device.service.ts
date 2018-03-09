@@ -16,7 +16,7 @@ export class DeviceService {
   private entriesUrl = 'api/entries';
   private devicesUrl = 'api/devices';
   private entryTypesUrl = 'api/entryTypes';
-  private fwVersionsUrl = 'api/fwVersions';
+  private entryDataTagsUrl = 'api/entryDataTags';
 
   constructor(private http: HttpClient) { }
 
@@ -35,6 +35,7 @@ export class DeviceService {
   }
 
   private log(message: string) {
+    console.log(message);
     //this.logService.log(new LogMessage('DeviceService', message));
   }
 
@@ -71,10 +72,10 @@ export class DeviceService {
     );
   }
 
-  getFwVersions(): Observable<string[]> {
-    const url = this.fwVersionsUrl;
-    return this.http.get<string[]>(url).pipe(
-      tap(list => this.log('fetch entryTypes')),
+  getDataTags(dataType: string): Observable<any[]> {
+    const url = `${this.entryDataTagsUrl}/?type=${dataType}`;
+    return this.http.get<any[]>(url).pipe(
+      tap(list => this.log('fetch DataTags')),
       catchError(this.handleError('getEntryTypes', []))
     );
   }

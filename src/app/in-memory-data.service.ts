@@ -31,10 +31,18 @@ export class InMemoryDataService implements InMemoryDbService {
       }
     ];
 
-    const hwVersions = ["V1.2.8", "V1.3.0", "V1.3.1", "V1.4.0", "V2.0"];
+    const entryDataTags = [
+      { type: "HwVersion", data: "V1.4" },
+      { type: "FwVersion", data: "V1.3.0" },
+      { type: "Defect", data: "defect C1" },
+      { type: "FwVersion", data: "V1.3.1" },
+      { type: "Defect", data: "connector broken" },
+      { type: "FwVersion", data: "V1.3.2" },
+      { type: "Remark", data: "Reserve" },
+      { type: "FwVersion", data: "V1.3.4" },
+      { type: "HwVersion", data: "V1.4.1" }
+    ];
 
-    const fwVersions = ["V1.3.0", "V1.3.1", "V1.3.2", "V2.0.0", "V2.0.1", "V2.1.1"];
-
-    return { entryTypes, entries, devices, hwVersions, fwVersions };
+    return { entryTypes, entries, devices, entryDataTags };
   }
 }
