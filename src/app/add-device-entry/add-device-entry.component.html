@@ -8,8 +8,8 @@
       </mat-select>
     </mat-form-field>
 
-
     <p *ngIf="!tagsLoaded">Loading tags...</p>
+    <mat-spinner *ngIf="!tagsLoaded"></mat-spinner>
 
     <mat-form-field class="row-full-width">
       <input name="data" type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="dataInputControl" [matAutocomplete]="auto" [(ngModel)]="model.data">

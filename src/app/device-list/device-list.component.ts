@@ -12,6 +12,7 @@ import { OrderPipe } from 'ngx-order-pipe';
   styleUrls: ['./device-list.component.scss']
 })
 export class DeviceListComponent implements OnInit {
+  isLoading: boolean = false;
   displayedColumns = ['sn', 'production_date', 'hwVersion', 'fwVersion'];
   dataSource = new MatTableDataSource([]);
   @ViewChild(MatSort) sort: MatSort;
@@ -23,10 +24,12 @@ export class DeviceListComponent implements OnInit {
   }
 
   getDeviceList(): void {
+    this.isLoading = true;
     this.deviceService.getDeviceList().
       subscribe((list) => {
         this.dataSource = new MatTableDataSource(list);
         this.dataSource.sort = this.sort;
+        this.isLoading = false;
       });
   }
 

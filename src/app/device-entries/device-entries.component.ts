@@ -20,6 +20,7 @@ export class DeviceEntriesComponent implements OnInit {
   dataSource = new MatTableDataSource([]);
   @ViewChild(MatSort) sort: MatSort;
 
+  isLoading: boolean = false;
   deviceId: number;
   parentDevice: Device = new Device();
 
@@ -35,10 +36,12 @@ export class DeviceEntriesComponent implements OnInit {
   }
 
   getDeviceEntries(): void {
+    this.isLoading = true;
     this.deviceService.getDeviceEntries(this.deviceId).
       subscribe((list) => {
         this.dataSource = new MatTableDataSource(list);
         this.dataSource.sort = this.sort;
+        this.isLoading = false;
       });
   }
 

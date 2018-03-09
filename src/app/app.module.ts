@@ -22,7 +22,7 @@ import {
   MatInputModule, MatAutocompleteModule,
   MatSelectModule, MatDatepickerModule,
   MatNativeDateModule, MatTableModule,
-  MatSortModule
+  MatSortModule, MatProgressSpinnerModule
 } from '@angular/material';
 
 @NgModule({
@@ -36,7 +36,7 @@ import {
     BrowserModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule, HttpClientModule, HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
     ), AppRoutingModule, OrderModule, MatInputModule, MatAutocompleteModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatTableModule,
-    MatSortModule
+    MatSortModule, MatProgressSpinnerModule
   ],
   providers: [DeviceService, FormsModule],
   bootstrap: [AppComponent]

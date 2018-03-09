@@ -1,17 +1,9 @@
-thead th {
-  cursor: pointer;
-  margin-right: 15px;
-  margin-left: 15px;
+.spinner-container {
+    height: 360px;
+    width: 390px;
+    position: fixed;
+}
 
-  span {
-    visibility: hidden;
-  }
-
-  &.active {
-    color: #000;
-
-    span {
-      visibility: visible;
-    }
-  }
+.spinner-container mat-spinner {
+    margin: 130px auto 0 auto;
 }
