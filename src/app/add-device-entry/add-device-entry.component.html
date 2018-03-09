@@ -12,18 +12,14 @@
     <p *ngIf="!tagsLoaded">Loading tags...</p>
 
     <mat-form-field class="row-full-width">
-      <input name="data" type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="dataInputControl" [matAutocomplete]="auto">
+      <input name="data" type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="dataInputControl" [matAutocomplete]="auto" [(ngModel)]="model.data">
       <mat-autocomplete #auto="matAutocomplete">
         <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
           {{ option }}
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
-    <!--
-    <mat-form-field class="row-full-width">
-      <input name="data" matInput placeholder="{{model.type}}" [(ngModel)]="model.data">
-    </mat-form-field>
--->
+
     <mat-form-field class="row-full-width">
       <input name="date" matInput [matDatepicker]="dp2" placeholder="Date" [(ngModel)]="model.date">
       <mat-datepicker-toggle matSuffix [for]="dp2"></mat-datepicker-toggle>
