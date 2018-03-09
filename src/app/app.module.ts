@@ -22,7 +22,8 @@ import {
   MatInputModule, MatAutocompleteModule,
   MatSelectModule, MatDatepickerModule,
   MatNativeDateModule, MatTableModule,
-  MatSortModule, MatProgressSpinnerModule
+  MatSortModule, MatProgressSpinnerModule,
+  MatCardModule
 } from '@angular/material';
 
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
@@ -53,7 +54,7 @@ export const MY_FORMATS = {
     BrowserModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule, HttpClientModule, HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
     ), AppRoutingModule, OrderModule, MatInputModule, MatAutocompleteModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatTableModule,
-    MatSortModule, MatProgressSpinnerModule
+    MatSortModule, MatProgressSpinnerModule, MatCardModule
   ],
   providers: [
     DeviceService,

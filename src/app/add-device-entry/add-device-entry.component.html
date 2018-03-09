@@ -1,34 +1,39 @@
-<h3>New Entry</h3>
-<div *ngIf="tagsLoaded">
-  <form class="form-box" *ngIf="!isLocked" (ngSubmit)="onSubmit()" #entryForm="ngForm">
+<mat-card>
+  <mat-card-title>New Entry</mat-card-title>
+  <mat-card-content *ngIf="tagsLoaded">
+    <form class="form-box" *ngIf="!isLocked" (ngSubmit)="onSubmit()" #entryForm="ngForm">
 
-    <mat-form-field class="row-full-width">
-      <mat-select name="type" placeholder="Entry Type" [(ngModel)]="model.type" [formControl]="typeSelectControl">
-        <mat-option *ngFor="let x of typeNames" [value]="x">{{ x }}</mat-option>
-      </mat-select>
-    </mat-form-field>
+      <mat-form-field class="row-full-width">
+        <mat-select name="type" placeholder="Entry Type" [(ngModel)]="model.type" [formControl]="typeSelectControl">
+          <mat-option *ngFor="let x of typeNames" [value]="x">{{ x }}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-    <mat-form-field class="row-full-width">
-      <input name="data" type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="dataInputControl" [matAutocomplete]="auto" [(ngModel)]="model.data">
-      <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-          {{ option }}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
+      <mat-form-field class="row-full-width">
+        <input name="data" type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="dataInputControl" [matAutocomplete]="auto" [(ngModel)]="model.data">
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+            {{ option }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
 
-    <mat-form-field class="row-full-width">
-      <input name="date" matInput [matDatepicker]="dp2" placeholder="Date" [(ngModel)]="model.date" [formControl]="date">
-      <mat-datepicker-toggle matSuffix [for]="dp2"></mat-datepicker-toggle>
-      <mat-datepicker #dp2></mat-datepicker>
-    </mat-form-field>
+      <mat-form-field class="row-full-width">
+        <input name="date" matInput [matDatepicker]="dp2" placeholder="Date" [(ngModel)]="model.date" [formControl]="date">
+        <mat-datepicker-toggle matSuffix [for]="dp2"></mat-datepicker-toggle>
+        <mat-datepicker #dp2></mat-datepicker>
+      </mat-form-field>
 
-    <button (click)="cancel()" class="btn">Cancel</button>
-    <button type="submit " class="btn btn-success ">Submit</button>
-  </form>
-  <div *ngIf="isLocked"><label>Please wait...</label></div>
-</div>
-<div class="loader" *ngIf="!tagsLoaded">
-  <p>Loading types</p>
-  <mat-spinner *ngIf="!tagsLoaded"></mat-spinner>
-</div>
+      <button (click)="cancel()" class="btn">Cancel</button>
+      <button type="submit " class="btn btn-success ">Submit</button>
+    </form>
+    <div *ngIf="isLocked"><label>Please wait...</label></div>
+
+  </mat-card-content>
+  <mat-card-content *ngIf="!tagsLoaded">
+
+    <p>Loading types</p>
+    <mat-spinner *ngIf="!tagsLoaded"></mat-spinner>
+  </mat-card-content>
+
+</mat-card>
