@@ -25,6 +25,23 @@ import {
   MatSortModule, MatProgressSpinnerModule
 } from '@angular/material';
 
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+
+// See the Moment.js docs for the meaning of these formats:
+// https://momentjs.com/docs/#/displaying/format/
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'DD-MM-YYYY',
+  },
+  display: {
+    dateInput: 'DD-MM-YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'DD-MM-YYYY',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,7 +55,12 @@ import {
     ), AppRoutingModule, OrderModule, MatInputModule, MatAutocompleteModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatTableModule,
     MatSortModule, MatProgressSpinnerModule
   ],
-  providers: [DeviceService, FormsModule],
+  providers: [
+    DeviceService,
+    FormsModule,
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

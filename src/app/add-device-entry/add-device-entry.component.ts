@@ -8,6 +8,13 @@ import { startWith } from 'rxjs/operators/startWith';
 import { map } from 'rxjs/operators/map';
 
 
+import * as _moment from 'moment';
+//import { default as _rollupMoment } from 'moment';
+//const moment = _rollupMoment || _moment;
+const moment = _moment;
+
+import * as Moment from 'moment';
+
 @Component({
   selector: 'app-add-device-entry',
   templateUrl: './add-device-entry.component.html',
@@ -21,6 +28,7 @@ export class AddDeviceEntryComponent implements OnInit {
 
   typeNames: string[] = [];
 
+  date: FormControl = new FormControl(moment);
   dataInputControl: FormControl = new FormControl();
   typeSelectControl: FormControl = new FormControl();
 

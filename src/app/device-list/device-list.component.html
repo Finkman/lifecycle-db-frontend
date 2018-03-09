@@ -16,7 +16,7 @@
     <!-- date Column -->
     <ng-container matColumnDef="production_date">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Production </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.production_date | date:'yyyy-MM-dd HH:mm'}} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{element.production_date | date:'dd-MM-yyyy'}} </mat-cell>
     </ng-container>
 
     <!-- hw Column -->
