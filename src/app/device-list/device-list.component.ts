@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+
+import { MatTableDataSource, MatSort } from '@angular/material';
 
 import { DeviceService } from '../device.service';
 import { Device } from '../device';
@@ -10,9 +12,9 @@ import { OrderPipe } from 'ngx-order-pipe';
   styleUrls: ['./device-list.component.scss']
 })
 export class DeviceListComponent implements OnInit {
-  deviceList: Device[];
-  order: string = 'sn';
-  reverse: boolean = true;
+  displayedColumns = ['sn', 'production_date', 'hwVersion', 'fwVersion'];
+  dataSource = new MatTableDataSource([]);
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(private orderPipe: OrderPipe, private deviceService: DeviceService) { }
 
@@ -22,14 +24,10 @@ export class DeviceListComponent implements OnInit {
 
   getDeviceList(): void {
     this.deviceService.getDeviceList().
-      subscribe(list => this.deviceList = list);
+      subscribe((list) => {
+        this.dataSource = new MatTableDataSource(list);
+        this.dataSource.sort = this.sort;
+      });
   }
 
-  setOrder(value: string) {
-    if (this.order === value) {
-      this.reverse = !this.reverse;
-    }
-
-    this.order = value;
-  }
 }

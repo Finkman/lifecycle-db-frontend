@@ -1,24 +1,31 @@
 <h2>List of Devices</h2>
 
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th [class.active]="order === 'sn'" (click)="setOrder('sn')">S/N <span [hidden]="reverse">▼</span
-          ><span [hidden]="!reverse">▲</span></th>
-      <th [class.active]="order === 'production_date'" (click)="setOrder('production_date')">Production Date <span [hidden]="reverse">▼</span
-          ><span [hidden]="!reverse">▲</span></th>
-      <th [class.active]="order === 'hwVersion'" (click)="setOrder('hwVersion')">Hardware <span [hidden]="reverse">▼</span
-          ><span [hidden]="!reverse">▲</span></th>
-      <th [class.active]="order === 'fwVersion'" (click)="setOrder('fwVersion')">Firmware <span [hidden]="reverse">▼</span
-          ><span [hidden]="!reverse">▲</span></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let device of deviceList | orderBy: order:reverse">
-      <td><a routerLink="/entries/{{device.id}}">{{device.sn}}</a></td>
-      <td>{{device.production_date | date:'yyyy-MM-dd HH:mm'}}</td>
-      <td>{{device.hwVersion}}</td>
-      <td>{{device.fwVersion}}</td>
-    </tr>
-  </tbody>
-</table>
+<mat-table #table [dataSource]="dataSource" matSort>
+
+  <!-- id Column -->
+  <ng-container matColumnDef="sn">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> S/N </mat-header-cell>
+    <mat-cell *matCellDef="let element"><a routerLink="/entries/{{element.id}}"> {{element.sn}} </a></mat-cell>
+  </ng-container>
+
+  <!-- date Column -->
+  <ng-container matColumnDef="production_date">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Production </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.production_date | date:'yyyy-MM-dd HH:mm'}} </mat-cell>
+  </ng-container>
+
+  <!-- hw Column -->
+  <ng-container matColumnDef="hwVersion">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Hw-Version </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.hwVersion}} </mat-cell>
+  </ng-container>
+
+  <!-- fw Column -->
+  <ng-container matColumnDef="fwVersion">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Fw-Version </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.fwVersion}} </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
