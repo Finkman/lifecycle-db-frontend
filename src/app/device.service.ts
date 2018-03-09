@@ -16,6 +16,7 @@ export class DeviceService {
   private entriesUrl = 'api/entries';
   private devicesUrl = 'api/devices';
   private entryTypesUrl = 'api/entryTypes';
+  private fwVersionsUrl = 'api/fwVersions';
 
   constructor(private http: HttpClient) { }
 
@@ -64,6 +65,14 @@ export class DeviceService {
 
   getEntryTypes(): Observable<string[]> {
     const url = this.entryTypesUrl;
+    return this.http.get<string[]>(url).pipe(
+      tap(list => this.log('fetch entryTypes')),
+      catchError(this.handleError('getEntryTypes', []))
+    );
+  }
+
+  getFwVersions(): Observable<string[]> {
+    const url = this.fwVersionsUrl;
     return this.http.get<string[]>(url).pipe(
       tap(list => this.log('fetch entryTypes')),
       catchError(this.handleError('getEntryTypes', []))

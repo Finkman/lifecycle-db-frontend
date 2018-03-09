@@ -23,11 +23,7 @@ export class AddDeviceEntryComponent implements OnInit {
 
   dataInputControl: FormControl = new FormControl();
 
-  dataOptions = [
-    'V1.3.0',
-    'V1.3.1',
-    'V1.4.3'
-  ];
+  dataOptions = [];
 
   filteredOptions: Observable<string[]>;
 
@@ -49,7 +45,16 @@ export class AddDeviceEntryComponent implements OnInit {
         startWith(''),
         map(val => this.filter(val))
       );
+
+    this.deviceService.getFwVersions().subscribe(
+      (list) => {
+        this.dataOptions = list;
+        // retrigger option load and clear field
+        this.dataInputControl.setValue('');
+      }
+    );
   }
+
 
   filter(val: string): string[] {
     return this.dataOptions.filter(option =>
