@@ -41,7 +41,6 @@ export class DeviceEntriesComponent implements OnInit {
       subscribe((list) => {
         this.dataSource.data = list;
         this.dataSource.sort = this.sort;
-        //this.refresh();
         this.isLoading = false;
       });
   }
