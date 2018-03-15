@@ -39,8 +39,9 @@ export class DeviceEntriesComponent implements OnInit {
     this.isLoading = true;
     this.deviceService.getDeviceEntries(this.deviceId).
       subscribe((list) => {
-        this.dataSource = new MatTableDataSource(list);
+        this.dataSource.data = list;
         this.dataSource.sort = this.sort;
+        //this.refresh();
         this.isLoading = false;
       });
   }
