@@ -36,11 +36,13 @@ export class InMemoryDataService implements InMemoryDbService {
     const projects = [
       {
         id: 1,
-        name: "Project A"
+        name: "Project A",
+        description: "A demo project without a sense"
       },
       {
         id: 2,
-        name: "Project  B"
+        name: "Project  B",
+        description: "Chaning the world with this!"
       }
     ]
 

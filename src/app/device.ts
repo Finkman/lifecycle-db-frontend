@@ -28,4 +28,5 @@ export class Device {
 export class Project {
   id: number;
   name: string;
+  description: string;
 }

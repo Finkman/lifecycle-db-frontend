@@ -59,7 +59,7 @@ export class DeviceService {
   getDeviceList(project?: number): Observable<Device[]> {
     let url = this.devicesUrl;
     if(project){
-      url = url.concat(`/${project}`);
+      url = url.concat(`/?project=${project}`);
     }
 
     return this.http.get<Device[]>(url).pipe(
