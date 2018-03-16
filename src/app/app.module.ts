@@ -23,11 +23,12 @@ import {
   MatSelectModule, MatDatepickerModule,
   MatNativeDateModule, MatTableModule,
   MatSortModule, MatProgressSpinnerModule,
-  MatCardModule
+  MatCardModule, MatExpansionModule
 } from '@angular/material';
 
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { ProjectListComponent } from './project-list/project-list.component';
 
 // See the Moment.js docs for the meaning of these formats:
 // https://momentjs.com/docs/#/displaying/format/
@@ -48,13 +49,14 @@ export const MY_FORMATS = {
     AppComponent,
     DeviceEntriesComponent,
     DeviceListComponent,
-    AddDeviceEntryComponent
+    AddDeviceEntryComponent,
+    ProjectListComponent
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule, HttpClientModule, HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
     ), AppRoutingModule, OrderModule, MatInputModule, MatAutocompleteModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatTableModule,
-    MatSortModule, MatProgressSpinnerModule, MatCardModule
+    MatSortModule, MatProgressSpinnerModule, MatCardModule, MatExpansionModule
   ],
   providers: [
     DeviceService,

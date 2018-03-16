@@ -17,7 +17,7 @@ export class DeviceService {
   private devicesUrl = 'api/devices';
   private entryTypesUrl = 'api/entryTypes';
   private entryDataTagsUrl = 'api/entryDataTags';
-  private entryProjectssUrl = 'api/projects';
+  private entryProjectsUrl = 'api/projects';
 
   constructor(private http: HttpClient) { }
 
@@ -94,7 +94,7 @@ export class DeviceService {
   }
 
   getProjects(): Observable<Project[]>{
-    return this.http.get<Project[]>(this.entryProjectssUrl).pipe(
+    return this.http.get<Project[]>(this.entryProjectsUrl).pipe(
       tap(entry => this.log('get projects')),
       catchError(this.handleError<Project[]>('getProjects'))
     )

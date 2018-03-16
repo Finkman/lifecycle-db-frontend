@@ -56,6 +56,6 @@ export class InMemoryDataService implements InMemoryDbService {
       { type: "HwVersion", data: "V1.4.1" }
     ];
 
-    return { entryTypes, entries, devices, entryDataTags };
+    return { entryTypes, entries, devices, projects, entryDataTags };
   }
 }
