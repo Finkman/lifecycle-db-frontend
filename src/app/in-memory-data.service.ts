@@ -30,6 +30,24 @@ export class InMemoryDataService implements InMemoryDbService {
         sn: 2012, production_date: "2017-08-20",
         hwVersion: "V2.0",
         fwVersion: "V1.3.2"
+      },
+      {
+        id: 3, project: 4,
+        sn: 2012, production_date: "2017-08-20",
+        hwVersion: "V2.0",
+        fwVersion: "V1.3.2"
+      },
+      {
+        id: 4, project: 4,
+        sn: 2012, production_date: "2017-08-20",
+        hwVersion: "V1.0",
+        fwVersion: "V2.0"
+      },
+      {
+        id: 5, project: 4,
+        sn: 2012, production_date: "2017-08-20",
+        hwVersion: "V1.0",
+        fwVersion: "V2.0"
       }
     ];
 
@@ -43,6 +61,16 @@ export class InMemoryDataService implements InMemoryDbService {
         id: 2,
         name: "Project  B",
         description: "Chaning the world with this!"
+      },
+      {
+        id: 3,
+        name: "Project Renasus",
+        description: "Just a fake"
+      },
+      {
+        id: 4,
+        name: "Eminet",
+        description: "Home Automation"
       }
     ]
 
