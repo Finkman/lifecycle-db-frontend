@@ -18,6 +18,12 @@
  * BROWSER POLYFILLS
  */
 
+import 'core-js/es6/reflect';
+import 'core-js/es7/reflect';
+import 'zone.js/dist/zone';
+import 'hammerjs';
+import 'web-animations-js';
+
 /** IE9, IE10 and IE11 requires all of the following polyfills. **/
 // import 'core-js/es6/symbol';
 // import 'core-js/es6/object';

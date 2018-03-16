@@ -30,6 +30,7 @@ export class DeviceEntriesComponent implements OnInit {
 
   ngOnInit() {
     this.addEntryVisible = false;
+    this.dataSource.sort = this.sort;
     this.deviceId = +this.route.snapshot.paramMap.get('deviceId');
     this.getDevice();
     this.getDeviceEntries();
