@@ -47,7 +47,7 @@ export class AddDeviceEntryComponent implements OnInit {
     this.getEntryTypes();
     this.model = new DeviceEntry();
     this.model.date = new Date(Date.now());
-    this.model.deviceId = this.deviceId;
+    this.model.device = this.deviceId;
     this.model.type = this.typeNames[0];
     this.filteredOptions = this.dataInputControl.valueChanges
       .pipe(

@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
-import { Device, DeviceEntry } from './device';
+import { Device, DeviceEntry, Project } from './device';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -17,6 +17,7 @@ export class DeviceService {
   private devicesUrl = 'api/devices';
   private entryTypesUrl = 'api/entryTypes';
   private entryDataTagsUrl = 'api/entryDataTags';
+  private entryProjectssUrl = 'api/projects';
 
   constructor(private http: HttpClient) { }
 
@@ -40,7 +41,7 @@ export class DeviceService {
   }
 
   getDeviceEntries(id: number): Observable<DeviceEntry[]> {
-    const url = `${this.entriesUrl}/?deviceId=${id}`;
+    const url = `${this.entriesUrl}/?device=${id}`;
     return this.http.get<DeviceEntry[]>(url).pipe(
       tap(heroes => this.log(`fetched device entrires`)),
       catchError(this.handleError('getDeviceEntries', []))
@@ -48,15 +49,19 @@ export class DeviceService {
   }
 
   getDevice(id: number): Observable<Device> {
-    const url = `${this.devicesUrl}/${id}`;
+    let url = `${this.devicesUrl}/${id}`;
     return this.http.get<Device>(url).pipe() /*
       tap(d => this.log(`fetched device`)),
       catchError(this.handleError('getDevice @id: ${id}', []))
     );*/
   }
 
-  getDeviceList(): Observable<Device[]> {
-    const url = this.devicesUrl;
+  getDeviceList(project?: number): Observable<Device[]> {
+    let url = this.devicesUrl;
+    if(project){
+      url = url.concat(`/${project}`);
+    }
+
     return this.http.get<Device[]>(url).pipe(
       tap(devices => this.log(`fetched devices`)),
       catchError(this.handleError('getDeviceList', []))
@@ -88,4 +93,10 @@ export class DeviceService {
       );
   }
 
+  getProjects(): Observable<Project[]>{
+    return this.http.get<Project[]>(this.entryProjectssUrl).pipe(
+      tap(entry => this.log('get projects')),
+      catchError(this.handleError<Project[]>('getProjects'))
+    )
+  }
 }

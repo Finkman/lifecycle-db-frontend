@@ -10,7 +10,7 @@ export enum EntryType {
 
 export class DeviceEntry {
   id: number;
-  deviceId: number;
+  device: number;
   date: Date;
   type: string;
   data: string;
@@ -23,4 +23,9 @@ export class Device {
   production_date: Date;
   hwVersion: string;
   fwVersion: string;
+}
+
+export class Project {
+  id: number;
+  name: string;
 }
