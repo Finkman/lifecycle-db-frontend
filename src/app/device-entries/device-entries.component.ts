@@ -17,7 +17,7 @@ import { OrderPipe } from 'ngx-order-pipe';
 })
 export class DeviceEntriesComponent implements OnInit {
   displayedColumns = ['date', 'type', 'data'];
-  dataSource = new MatTableDataSource([]);
+  dataSource = new MatTableDataSource();
   @ViewChild(MatSort) sort: MatSort;
 
   isLoading: boolean = false;
@@ -39,9 +39,8 @@ export class DeviceEntriesComponent implements OnInit {
     this.isLoading = true;
     this.deviceService.getDeviceEntries(this.deviceId).
       subscribe((list) => {
-        this.dataSource.data = list;
-        this.dataSource.sort = this.sort;
         this.isLoading = false;
+        this.dataSource.data = list;
       });
   }
 
