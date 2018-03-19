@@ -10,14 +10,16 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
+const baseUrl = 'http://lifecycle.finktronic.de/api';
+
 @Injectable()
 export class DeviceService {
 
-  private entriesUrl = 'api/entries';
-  private devicesUrl = 'api/devices';
-  private entryTypesUrl = 'api/entryTypes';
-  private entryDataTagsUrl = 'api/entryDataTags';
-  private entryProjectsUrl = 'api/projects';
+  private entriesUrl = `${baseUrl}/deviceEntries.php`;
+  private devicesUrl = `${baseUrl}/devices.php`;
+  private entryTypesUrl = `${baseUrl}/entryTypes.php`;
+  private entryDataTagsUrl = `${baseUrl}/dataTags.php`;
+  private entryProjectsUrl = `${baseUrl}/projects.php`;
 
   constructor(private http: HttpClient) { }
 
@@ -41,7 +43,7 @@ export class DeviceService {
   }
 
   getDeviceEntries(id: number): Observable<DeviceEntry[]> {
-    const url = `${this.entriesUrl}/?device=${id}`;
+    const url = `${this.entriesUrl}?device=${id}`;
     return this.http.get<DeviceEntry[]>(url).pipe(
       tap(heroes => this.log(`fetched device entrires`)),
       catchError(this.handleError('getDeviceEntries', []))
@@ -49,7 +51,7 @@ export class DeviceService {
   }
 
   getDevice(id: number): Observable<Device> {
-    let url = `${this.devicesUrl}/${id}`;
+    let url = `${this.devicesUrl}?device=${id}`;
     return this.http.get<Device>(url).pipe() /*
       tap(d => this.log(`fetched device`)),
       catchError(this.handleError('getDevice @id: ${id}', []))
@@ -59,7 +61,7 @@ export class DeviceService {
   getDeviceList(project?: number): Observable<Device[]> {
     let url = this.devicesUrl;
     if(project){
-      url = url.concat(`/?project=${project}`);
+      url = url.concat(`?project=${project}`);
     }
 
     return this.http.get<Device[]>(url).pipe(
@@ -78,7 +80,7 @@ export class DeviceService {
   }
 
   getDataTags(dataType: string): Observable<any[]> {
-    const url = `${this.entryDataTagsUrl}/?type=${dataType}`;
+    const url = `${this.entryDataTagsUrl}?type=${dataType}`;
     return this.http.get<any[]>(url).pipe(
       tap(list => this.log('fetch DataTags')),
       catchError(this.handleError('getEntryTypes', []))
