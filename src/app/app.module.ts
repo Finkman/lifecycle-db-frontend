@@ -28,6 +28,9 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { ProjectListComponent } from './project-list/project-list.component';
 
+import { fakeBackendProvider } from './provider/fakte-backend.provider';
+
+
 // See the Moment.js docs for the meaning of these formats:
 // https://momentjs.com/docs/#/displaying/format/
 export const MY_FORMATS = {
@@ -58,7 +61,10 @@ export const MY_FORMATS = {
     DeviceService,
     FormsModule,
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+  
+    // hook-in fake backend
+    fakeBackendProvider
   ],
   bootstrap: [AppComponent]
 })
