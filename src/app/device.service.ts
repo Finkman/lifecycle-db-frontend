@@ -6,11 +6,13 @@ import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Device, DeviceEntry, Project } from './device';
 
+import { appConfig } from './app.config';
+
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
-const baseUrl = 'http://lifecycle.finktronic.de/api';
+const baseUrl = appConfig.apiBaseUrl;
 
 @Injectable()
 export class DeviceService {
