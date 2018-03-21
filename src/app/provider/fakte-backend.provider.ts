@@ -82,9 +82,9 @@ export let fakeBackendProvider = {
 };
 
 
-const entryTypes = ["HwVersion", "FwVersion", "Defect", "Shippment", "Remark"];
+let entryTypes = ["HwVersion", "FwVersion", "Defect", "Shippment", "Remark"];
 
-const entries = [
+let entries = [
   { id: 11, device: 1, date: "2017-01-12", type: "HwVersion", data: "V1.4" },
   { id: 12, device: 1, date: "2017-01-23", type: "FwVersion", data: "V1.3.0" },
   { id: 13, device: 1, date: "2017-05-12", type: "Defect", data: "defect C1" },
@@ -98,7 +98,7 @@ const entries = [
   { id: 21, device: 2, date: "2017-05-12", type: "HwVersion", data: "V1.4.1" }
 ];
 
-const devices = [
+let devices = [
   {
     id: 1, project: 1,
     sn: 2011, production_date: "2017-05-12",
@@ -131,7 +131,7 @@ const devices = [
   }
 ];
 
-const projects = [
+let projects = [
   {
     id: 1,
     name: "Project A",
@@ -154,7 +154,7 @@ const projects = [
   }
 ]
 
-const entryDataTags = [
+let entryDataTags = [
   { type: "HwVersion", data: "V1.4" },
   { type: "FwVersion", data: "V1.3.0" },
   { type: "Defect", data: "defect C1" },
