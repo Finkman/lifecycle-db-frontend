@@ -1,3 +1,4 @@
 export const appConfig = {
-  apiBaseUrl: 'http://lifecycle.finktronic.de/api'
+  apiBaseUrl: 'http://lifecycle.finktronic.de/api',
+  userBaseUrl: 'http://lifecycle.finktronic.de/user'
 };
