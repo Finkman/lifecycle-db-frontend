@@ -9,9 +9,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { DeviceEntriesComponent } from './device-entries/device-entries.component';
 import { AppRoutingModule } from './app-routing.module';
 
+import { AuthGuard } from './guard/auth.guard';
+
 import { DeviceService } from './device.service';
 import { DeviceListComponent } from './device-list/device-list.component';
 import { AddDeviceEntryComponent } from './add-device-entry/add-device-entry.component';
+import { LoginComponent } from './login/login.component';
 
 import { DatePipe } from '@angular/common';
 import { OrderModule } from 'ngx-order-pipe'; // <- import OrderModule
@@ -29,6 +32,7 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { ProjectListComponent } from './project-list/project-list.component';
 
 import { fakeBackendProvider } from './provider/fakte-backend.provider';
+
 
 
 // See the Moment.js docs for the meaning of these formats:
@@ -51,13 +55,15 @@ export const MY_FORMATS = {
     DeviceEntriesComponent,
     DeviceListComponent,
     AddDeviceEntryComponent,
-    ProjectListComponent
+    ProjectListComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule, HttpClientModule, AppRoutingModule, OrderModule, MatInputModule, MatAutocompleteModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatTableModule,
     MatSortModule, MatProgressSpinnerModule, MatCardModule, MatExpansionModule
   ],
   providers: [
+    AuthGuard,
     DeviceService,
     FormsModule,
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
