@@ -11,5 +11,6 @@ export class User {
   passwordHash: string;
   firstName: string;
   lastName: string;
+  email: string;
   level: AccessLevel; // Todo: Use map of projects and levels to grand different levels
 }

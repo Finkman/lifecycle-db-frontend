@@ -1,0 +1,7 @@
+.user-table{
+  table-layout: fixed;
+}
+.user-table tr td:first-child {
+  font-weight: bold;
+  width: 70pt;
+}

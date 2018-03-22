@@ -27,7 +27,7 @@ export class FakeLoginProvider implements HttpInterceptor {
     return Observable.of(null)
         .mergeMap(() => {
 
-          if(request.url.endsWith('/api/authenticate.php') &&
+          if (request.url.endsWith('/api/authenticate.php') &&
               request.method === 'POST') {
             // console.log(`fake: login requested for
             // ${request.body.passwordHash}`);
@@ -58,8 +58,9 @@ export class FakeLoginProvider implements HttpInterceptor {
             }
           }
 
-          if(request.url.endsWith('/api/userList.php')){
-            return Observable.of(new HttpResponse({status: 200, body: fakedUsers}));
+          if (request.url.endsWith('/api/userList.php')) {
+            return Observable.of(
+                new HttpResponse({status: 200, body: fakedUsers}));
           }
 
           return next.handle(request);
@@ -70,14 +71,35 @@ export class FakeLoginProvider implements HttpInterceptor {
   }
 }
 
-let fakedUsers: User[] = [{
-  _id: "id1",
-  username: "admin",
-  passwordHash: `${Md5.hashStr("1234")}`,
-  firstName: "Sven",
-  lastName: "Fink",
-  level: AccessLevel.Creator,
-}];
+let fakedUsers: User[] = [
+  {
+    _id: "id1",
+    username: "admin",
+    passwordHash: `${Md5.hashStr("1234")}`,
+    firstName: "Svenson",
+    lastName: "Fink",
+    email: "fink@piclife.de",
+    level: AccessLevel.Creator,
+  },
+  {
+    _id: "id2",
+    username: "Finkman",
+    passwordHash: `${Md5.hashStr("1234")}`,
+    firstName: "Sven",
+    lastName: "Fink",
+    email: "sven.fink@piclife.de",
+    level: AccessLevel.Creator,
+  },
+  {
+    _id: "id3",
+    username: "Tester",
+    passwordHash: `${Md5.hashStr("1234")}`,
+    firstName: "Max",
+    lastName: "Musterman",
+    email: "finks@piclife.de",
+    level: AccessLevel.Visitor,
+  },
+];
 
 export let fakeLoginProvider = {
   provide: HTTP_INTERCEPTORS,

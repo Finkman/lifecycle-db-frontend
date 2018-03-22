@@ -37,6 +37,7 @@ import { jwtInterceptorProvider } from './provider/JwtInterceptor';
 
 import { fakeBackendProvider } from './provider/fakte-backend.provider';
 import { fakeLoginProvider } from './provider/fake-login.provider';
+import { UserListComponent } from './user-list/user-list.component';
 
 
 
@@ -61,7 +62,8 @@ export const MY_FORMATS = {
     DeviceListComponent,
     AddDeviceEntryComponent,
     ProjectListComponent,
-    LoginComponent
+    LoginComponent,
+    UserListComponent
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule, HttpClientModule, AppRoutingModule, OrderModule, MatInputModule, MatAutocompleteModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatTableModule,
