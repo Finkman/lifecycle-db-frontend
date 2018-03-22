@@ -33,6 +33,7 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { ProjectListComponent } from './project-list/project-list.component';
 
 import { fakeBackendProvider } from './provider/fakte-backend.provider';
+import { fakeLoginProvider } from './provider/fake-login.provider';
 
 
 
@@ -71,7 +72,10 @@ export const MY_FORMATS = {
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
   
     // hook-in fake backend
-    fakeBackendProvider
+    fakeBackendProvider,
+
+    // hook-in fake login provider
+    fakeLoginProvider
   ],
   bootstrap: [AppComponent]
 })
