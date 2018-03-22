@@ -23,8 +23,6 @@ export class FakeLoginProvider implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler):
       Observable<HttpEvent<any>> {
-    // local storage of users on backend
-    let users: any[] = JSON.parse(localStorage.getItem('users')) || [];
 
     return Observable.of(null)
         .mergeMap(() => {
@@ -33,17 +31,18 @@ export class FakeLoginProvider implements HttpInterceptor {
               request.method === 'POST') {
             console.log(`fake: login requested`);
             // find if any user matches login
-            let filteredUsers = users.filter(user => {
+            let filteredUsers = fakedUsers.filter(user => {
               return user.username === request.body.username &&
                   user.password === request.body.password;
             });
 
             if (filteredUsers.length) {
+              console.log(`fake: login does match -> success`);
               // if login details are valid, return 200 with user details and
               // token
               let user = filteredUsers[0];
               let body = {
-                id: user.id,
+                id: user._id,
                 username: user.username,
                 firstName: user.firstName,
                 lastName: user.lastName,
@@ -52,6 +51,7 @@ export class FakeLoginProvider implements HttpInterceptor {
 
               return Observable.of(new HttpResponse({status: 200, body: body}));
             } else {
+              console.log(`fake: login does not match`);
               return Observable.throw('Username or password is incorrect');
             }
           }

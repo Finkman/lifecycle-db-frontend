@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthGuard } from './guard/auth.guard';
 
 import { DeviceService } from './device.service';
+import { AuthenticationService } from './authentication.service';
 import { DeviceListComponent } from './device-list/device-list.component';
 import { AddDeviceEntryComponent } from './add-device-entry/add-device-entry.component';
 import { LoginComponent } from './login/login.component';
@@ -67,6 +68,7 @@ export const MY_FORMATS = {
   providers: [
     AuthGuard,
     DeviceService,
+    AuthenticationService,
     FormsModule,
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
