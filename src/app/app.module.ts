@@ -26,7 +26,8 @@ import {
   MatNativeDateModule, MatTableModule,
   MatSortModule, MatProgressSpinnerModule,
   MatCardModule, MatExpansionModule,
-  MatButtonModule
+  MatButtonModule, MatIcon, MatToolbar,
+  MatSidenav, MatSidenavContainer, MatToolbarModule, MatSidenavModule, MatIconModule
 } from '@angular/material';
 
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
@@ -39,7 +40,8 @@ import { fakeBackendProvider } from './provider/fakte-backend.provider';
 import { fakeLoginProvider } from './provider/fake-login.provider';
 import { UserListComponent } from './user-list/user-list.component';
 
-
+import {MediaMatcher} from '@angular/cdk/layout';
+import {ChangeDetectorRef} from '@angular/core';
 
 // See the Moment.js docs for the meaning of these formats:
 // https://momentjs.com/docs/#/displaying/format/
@@ -67,7 +69,8 @@ export const MY_FORMATS = {
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule, HttpClientModule, AppRoutingModule, OrderModule, MatInputModule, MatAutocompleteModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatTableModule,
-    MatSortModule, MatProgressSpinnerModule, MatCardModule, MatExpansionModule, MatButtonModule
+    MatSortModule, MatProgressSpinnerModule, MatCardModule, MatExpansionModule, MatButtonModule, MatToolbarModule,
+    MatSidenavModule, MatIconModule
   ],
   providers: [
     AuthGuard,
@@ -88,4 +91,20 @@ export const MY_FORMATS = {
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+  mobileQuery: MediaQueryList;
+  private _mobileQueryListener: () => void;
+
+  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
+  }
+
+  ngOnDestroy(): void {
+    this.mobileQuery.removeListener(this._mobileQueryListener);
+  }
+
+  shouldRun = [/(^|\.)plnkr\.co$/, /(^|\.)stackblitz\.io$/].some(h => h.test(window.location.host));
+}
+
