@@ -5,10 +5,11 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import {appConfig} from './app.config';
 
-import {User} from './models/user';
+import {User, AccessLevel} from './models/user';
 
 const baseUrl = appConfig.userBaseUrl;
 const authenticateUrl = `${baseUrl}/authenticate.php`;
+const userListUrl = `${baseUrl}/userList.php`;
 
 @Injectable()
 export class AuthenticationService {
@@ -30,8 +31,27 @@ export class AuthenticationService {
     });
   }
 
+  reload(){
+    return this.http.get<User>(authenticateUrl).map(
+      user => {
+        if(user){
+          localStorage.setItem('currentUser', JSON.stringify(user));
+        }
+
+        return user;
+      }
+    );
+  }
+
   logout(){
-    localStorage.removeItem('currentUser');
+    if(this.isLoggedOn()){
+      localStorage.removeItem('currentUser');
+    }
+  }
+
+  isLoggedOn() : boolean{
+    let user = this.getCurrentUser();
+    return user && user.level != AccessLevel.None;
   }
 
   getCurrentUser() : User {
@@ -42,5 +62,13 @@ export class AuthenticationService {
     else{
       return null;
     }
+  }
+
+  getUserList() : Observable<User[]>{
+    if(!this.isLoggedOn()){
+      Observable.throw('access denied');
+    }
+
+    return this.http.get<User[]>(userListUrl);
   }
 }
