@@ -1,7 +1,7 @@
 export class User {
   _id: string;
   username: string;
-  password: string;
+  passwordHash: string;
   firstName: string;
   lastName: string;
 }

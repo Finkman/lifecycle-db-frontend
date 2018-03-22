@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {Md5} from 'ts-md5/dist/md5';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -12,7 +13,8 @@ export class AuthenticationService {
   constructor(private http: HttpClient) {}
 
   login(username: string, password: string){
-    return this.http.post<any>(authenticateUrl, {username: username, password: password})
+    let hash = Md5.hashStr(password);
+    return this.http.post<any>(authenticateUrl, {username: username, passwordHash: hash})
     .map(user => {
       // it was successful
       if(user && user.token){
