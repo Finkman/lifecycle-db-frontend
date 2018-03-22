@@ -17,6 +17,7 @@ export class AuthenticationService {
       // it was successful
       if(user && user.token){
         // store it in local storage
+        console.log("authService: store user");
         localStorage.setItem('currentUser', JSON.stringify(user));
       }
 
