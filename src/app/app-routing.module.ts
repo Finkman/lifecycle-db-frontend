@@ -12,9 +12,9 @@ import { LoginComponent } from './login/login.component';
 const routes: Routes = [
   { path: '', component: ProjectListComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
-  { path: 'devicelist', component: DeviceListComponent },
-  { path: 'projectlist', component: ProjectListComponent },
-  { path: 'entries/:deviceId', component: DeviceEntriesComponent },
+  { path: 'devicelist', component: DeviceListComponent, canActivate: [AuthGuard]  },
+  { path: 'projectlist', component: ProjectListComponent, canActivate: [AuthGuard]  },
+  { path: 'entries/:deviceId', component: DeviceEntriesComponent, canActivate: [AuthGuard]  },
 
   { path: '**', redirectTo: ''}
 ];
