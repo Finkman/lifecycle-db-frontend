@@ -5,6 +5,8 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import {appConfig} from './app.config';
 
+import {User} from './models/user';
+
 const baseUrl = appConfig.userBaseUrl;
 const authenticateUrl = `${baseUrl}/authenticate.php`;
 
@@ -20,6 +22,7 @@ export class AuthenticationService {
       if(user && user.token){
         // store it in local storage
         console.log("authService: store user");
+        let reUser = user as User;
         localStorage.setItem('currentUser', JSON.stringify(user));
       }
 
@@ -29,5 +32,15 @@ export class AuthenticationService {
 
   logout(){
     localStorage.removeItem('currentUser');
+  }
+
+  getCurrentUser() : User {
+    let storedUser = localStorage.getItem('currentUser');
+    if(storedUser){
+      return JSON.parse(storedUser) as User;
+    }
+    else{
+      return null;
+    }
   }
 }

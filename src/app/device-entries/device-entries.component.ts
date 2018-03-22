@@ -4,11 +4,13 @@ import { MatTableDataSource, MatSort } from '@angular/material';
 
 import { DeviceEntry, Device } from '../device';
 import { DeviceService } from '../device.service';
+import { AuthenticationService } from '../authentication.service';
 
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { OrderPipe } from 'ngx-order-pipe';
+import { AccessLevel } from '../models/user';
 
 @Component({
   selector: 'app-device-entries',
@@ -21,14 +23,17 @@ export class DeviceEntriesComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   isLoading: boolean = false;
+  canAddEntries: boolean = false;
   deviceId: number;
   parentDevice: Device = new Device();
 
   addEntryVisible: boolean;
 
-  constructor(private orderPipe: OrderPipe, private deviceService: DeviceService, private location: Location, private route: ActivatedRoute, ) { }
+  constructor(private orderPipe: OrderPipe, private deviceService: DeviceService,
+    private authenticationService: AuthenticationService, private location: Location, private route: ActivatedRoute, ) { }
 
   ngOnInit() {
+    this.canAddEntries = this.authenticationService.getCurrentUser().level == AccessLevel.Creator; 
     this.addEntryVisible = false;
     this.dataSource.sort = this.sort;
     this.deviceId = +this.route.snapshot.paramMap.get('deviceId');

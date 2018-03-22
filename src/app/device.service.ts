@@ -90,6 +90,7 @@ export class DeviceService {
   }
 
   addDeviceEntry(entry: DeviceEntry): Observable<DeviceEntry> {
+    //if(localStorage.getItem['currentUser'] )
     return this.http.post<DeviceEntry>(this.entriesUrl, entry, httpOptions)
       .pipe(
         tap(entry => this.log(`added entry w/ id=${entry.id}`)),

@@ -16,7 +16,7 @@ import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/materialize';
 import 'rxjs/add/operator/dematerialize';
 
-import { User } from '../models/user';
+import {User, AccessLevel} from '../models/user';
 
 @Injectable()
 export class FakeLoginProvider implements HttpInterceptor {
@@ -24,13 +24,13 @@ export class FakeLoginProvider implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler):
       Observable<HttpEvent<any>> {
-
     return Observable.of(null)
         .mergeMap(() => {
 
           if (request.url.endsWith('/api/authenticate.php') &&
               request.method === 'POST') {
-            // console.log(`fake: login requested for ${request.body.passwordHash}`);
+            // console.log(`fake: login requested for
+            // ${request.body.passwordHash}`);
             // find if any user matches login
             let filteredUsers = fakedUsers.filter(user => {
               return user.username === request.body.username &&
@@ -47,7 +47,8 @@ export class FakeLoginProvider implements HttpInterceptor {
                 username: user.username,
                 firstName: user.firstName,
                 lastName: user.lastName,
-                token: 'fake-jwt-token'
+                token: 'fake-jwt-token',
+                level: user.level,
               };
 
               return Observable.of(new HttpResponse({status: 200, body: body}));
@@ -65,9 +66,14 @@ export class FakeLoginProvider implements HttpInterceptor {
   }
 }
 
-let fakedUsers : User[] = [
-  {_id: "id1", username: "admin", passwordHash: `${Md5.hashStr("1234")}`, firstName: "Sven", lastName: "Fink"}
-];
+let fakedUsers: User[] = [{
+  _id: "id1",
+  username: "admin",
+  passwordHash: `${Md5.hashStr("1234")}`,
+  firstName: "Sven",
+  lastName: "Fink",
+  level: AccessLevel.Creator,
+}];
 
 export let fakeLoginProvider = {
   provide: HTTP_INTERCEPTORS,
