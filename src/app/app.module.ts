@@ -132,4 +132,3 @@ export const MY_FORMATS = {
 })
 export class AppModule {}
 
-platformBrowserDynamic().bootstrapModule(AppModule);
