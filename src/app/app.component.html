@@ -1,13 +1,13 @@
 
 
-<div class="main-container">
+<div class="main-container" [class.main-is-mobile]="mobileQuery.matches">
     <mat-toolbar color="primary" class="main-toolbar">
       <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
-      <h1 class="main-app-name">LifecycleDbFrontend</h1>
+      <h1 class="main-app-name">{{title}}</h1>
     </mat-toolbar>
 
-    <mat-sidenav-container class="main-sidenav-container" [style.marginTop.px]="0">
-      <mat-sidenav #snav [mode]="'push'" fixedTopGap="56">
+    <mat-sidenav-container class="main-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+      <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'push'" [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
         <p>A Hier ist das menu</p>
         <p>Hier ist das menu</p>
         <p>Hier ist das menu</p>
@@ -27,18 +27,5 @@
       </mat-sidenav-content>
     </mat-sidenav-container>
 </div>
-<!--
-    <mat-sidenav-container class="example-sidenav-container"
-                           [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
-      <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
-                   [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
-        <p>Hier ist das menu</p>
-      </mat-sidenav>
-  
-      <mat-sidenav-content>
-          <router-outlet></router-outlet>
-      </mat-sidenav-content>
-    </mat-sidenav-container>
-  -->
 
   

@@ -20,6 +20,9 @@ import { LoginComponent } from './login/login.component';
 import { DatePipe } from '@angular/common';
 import { OrderModule } from 'ngx-order-pipe'; // <- import OrderModule
 
+import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
+import {LayoutModule, MediaMatcher} from '@angular/cdk/layout';
+
 import {
   MatInputModule, MatAutocompleteModule,
   MatSelectModule, MatDatepickerModule,
@@ -39,9 +42,6 @@ import { jwtInterceptorProvider } from './provider/JwtInterceptor';
 import { fakeBackendProvider } from './provider/fakte-backend.provider';
 import { fakeLoginProvider } from './provider/fake-login.provider';
 import { UserListComponent } from './user-list/user-list.component';
-
-import {MediaMatcher} from '@angular/cdk/layout';
-import {ChangeDetectorRef} from '@angular/core';
 
 // See the Moment.js docs for the meaning of these formats:
 // https://momentjs.com/docs/#/displaying/format/
@@ -77,6 +77,7 @@ export const MY_FORMATS = {
     DeviceService,
     AuthenticationService,
     FormsModule,
+    MediaMatcher,
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
   
@@ -91,18 +92,6 @@ export const MY_FORMATS = {
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { 
-  mobileQuery: MediaQueryList;
-  private _mobileQueryListener: () => void;
+export class AppModule {}
 
-  constructor(){//changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
-    // this.mobileQuery = media.matchMedia('(max-width: 600px)');
-    // this._mobileQueryListener = () => changeDetectorRef.detectChanges();
-    // this.mobileQuery.addListener(this._mobileQueryListener);
-  }
-
-  ngOnDestroy(): void {
-    this.mobileQuery.removeListener(this._mobileQueryListener);
-  }
-}
-
+platformBrowserDynamic().bootstrapModule(AppModule);
