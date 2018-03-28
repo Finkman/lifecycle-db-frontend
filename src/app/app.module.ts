@@ -20,17 +20,28 @@ import { LoginComponent } from './login/login.component';
 import { DatePipe } from '@angular/common';
 import { OrderModule } from 'ngx-order-pipe'; // <- import OrderModule
 
-import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
-import {LayoutModule, MediaMatcher} from '@angular/cdk/layout';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { LayoutModule, MediaMatcher } from '@angular/cdk/layout';
 
 import {
-  MatInputModule, MatAutocompleteModule,
-  MatSelectModule, MatDatepickerModule,
-  MatNativeDateModule, MatTableModule,
-  MatSortModule, MatProgressSpinnerModule,
-  MatCardModule, MatExpansionModule,
-  MatButtonModule, MatIcon, MatToolbar,
-  MatSidenav, MatSidenavContainer, MatToolbarModule, MatSidenavModule, MatIconModule
+  MatInputModule,
+  MatAutocompleteModule,
+  MatSelectModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatTableModule,
+  MatSortModule,
+  MatProgressSpinnerModule,
+  MatCardModule,
+  MatExpansionModule,
+  MatButtonModule,
+  MatIcon,
+  MatToolbar,
+  MatSidenav,
+  MatSidenavContainer,
+  MatToolbarModule,
+  MatSidenavModule,
+  MatIconModule
 } from '@angular/material';
 
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
@@ -46,51 +57,74 @@ import { UserListComponent } from './user-list/user-list.component';
 // See the Moment.js docs for the meaning of these formats:
 // https://momentjs.com/docs/#/displaying/format/
 export const MY_FORMATS = {
-  parse: {
-    dateInput: 'DD-MM-YYYY',
-  },
-  display: {
-    dateInput: 'DD-MM-YYYY',
-    monthYearLabel: 'MMM YYYY',
-    dateA11yLabel: 'DD-MM-YYYY',
-    monthYearA11yLabel: 'MMMM YYYY',
-  },
+  parse:
+    {
+      dateInput: 'DD-MM-YYYY'
+    },
+  display:
+    {
+      dateInput: 'DD-MM-YYYY',
+      monthYearLabel: 'MMM YYYY',
+      dateA11yLabel: 'DD-MM-YYYY',
+      monthYearA11yLabel: 'MMMM YYYY'
+    }
 };
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    DeviceEntriesComponent,
-    DeviceListComponent,
-    AddDeviceEntryComponent,
-    ProjectListComponent,
-    LoginComponent,
-    UserListComponent
-  ],
-  imports: [
-    BrowserModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule, HttpClientModule, AppRoutingModule, OrderModule, MatInputModule, MatAutocompleteModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatTableModule,
-    MatSortModule, MatProgressSpinnerModule, MatCardModule, MatExpansionModule, MatButtonModule, MatToolbarModule,
-    MatSidenavModule, MatIconModule
-  ],
-  providers: [
-    AuthGuard,
-    DeviceService,
-    AuthenticationService,
-    FormsModule,
-    MediaMatcher,
-    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
-  
-    // to provide auth-token
-    jwtInterceptorProvider,
+  declarations:
+    [
+      AppComponent,
+      DeviceEntriesComponent,
+      DeviceListComponent,
+      AddDeviceEntryComponent,
+      ProjectListComponent,
+      LoginComponent,
+      UserListComponent
+    ],
+  imports:
+    [
+      BrowserModule,
+      BrowserAnimationsModule,
+      FormsModule,
+      ReactiveFormsModule,
+      HttpClientModule,
+      AppRoutingModule,
+      OrderModule,
+      MatInputModule,
+      MatAutocompleteModule,
+      MatSelectModule,
+      MatDatepickerModule,
+      MatNativeDateModule,
+      MatTableModule,
+      MatSortModule,
+      MatProgressSpinnerModule,
+      MatCardModule,
+      MatExpansionModule,
+      MatButtonModule,
+      MatToolbarModule,
+      MatSidenavModule,
+      MatIconModule
+    ],
+  providers:
+    [
+      AuthGuard,
+      DeviceService,
+      AuthenticationService,
+      FormsModule,
+      MediaMatcher,
+      { provide: DateAdapter, useClass: MomentDateAdapter, deps: [ MAT_DATE_LOCALE ] },
+      { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
 
-    // hook-in fake backend
-    fakeBackendProvider,
+      // to provide auth-token
+      jwtInterceptorProvider,
 
-    // hook-in fake login provider
-    fakeLoginProvider
-  ],
-  bootstrap: [AppComponent]
+      // hook-in fake backend
+      fakeBackendProvider,
+
+      // hook-in fake login provider
+      fakeLoginProvider
+    ],
+  bootstrap: [ AppComponent ]
 })
 export class AppModule {}
 
