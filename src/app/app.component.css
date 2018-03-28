@@ -29,3 +29,13 @@ h1.main-app-name {
      `<body>` to be our scrolling element for mobile layouts. */
   flex: 1 0 auto;
 }
+
+.right-col{
+  float: right;
+  display: flex;
+}
+
+.left-col{
+  float: left;
+  display: flex;
+}

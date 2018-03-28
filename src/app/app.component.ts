@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import {MediaMatcher} from '@angular/cdk/layout';
-import {ChangeDetectorRef} from '@angular/core';
-import {LayoutModule} from '@angular/cdk/layout';
+import { MediaMatcher } from '@angular/cdk/layout';
+import { ChangeDetectorRef } from '@angular/core';
+import { LayoutModule } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: [ './app.component.css' ]
 })
 export class AppComponent {
   title = 'LifecycleDbFrontend';
@@ -15,8 +15,8 @@ export class AppComponent {
   mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
   private _updateLayoutListener: (e) => void;
-  
-  public updateLayoutListener(e){
+
+  public updateLayoutListener(e) {
     this.navIsOpened = !e.matches;
     this.changeDetectorRef.detectChanges();
   }
@@ -30,7 +30,7 @@ export class AppComponent {
     this.navIsOpened = !this.mobileQuery.matches;
   }
 
-  toggle(): void{
+  toggle(): void {
     this.navIsOpened = !this.navIsOpened;
     this.changeDetectorRef.detectChanges();
   }

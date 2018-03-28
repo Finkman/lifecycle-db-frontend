@@ -2,23 +2,34 @@
 
 <div class="main-container" [class.main-is-mobile]="mobileQuery.matches">
     <mat-toolbar color="primary" class="main-toolbar">
-      <button *ngIf="mobileQuery.matches" mat-icon-button (click)="toggle()"><mat-icon>menu</mat-icon></button>
-      <h1 class="main-app-name">{{title}}</h1>
+      <div style="width:100%; margin:0; padding:0;">
+        <div class="left-col">
+          <button *ngIf="mobileQuery.matches" mat-icon-button (click)="toggle()"><mat-icon>menu</mat-icon></button>
+          <h1 class="main-app-name">{{title}}</h1>
+        </div>
+        <div class="right-col">
+          <mat-menu #appMenu="matMenu">
+              <button mat-menu-item>Show Profile</button>
+              <button mat-menu-item routerLink="/login">Log-Off</button>
+          </mat-menu>
+          <button mat-icon-button [matMenuTriggerFor]="appMenu">
+              <mat-icon aria-label="Your Profile">face</mat-icon>
+          </button>
+        </div>
+      </div>
     </mat-toolbar>
     <mat-sidenav-container class="main-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
       <mat-sidenav #snav [(opened)]="navIsOpened" [mode]="mobileQuery.matches ? 'push' : 'side'" [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
-        <p>A Hier ist das menu</p>
-        <p>Hier ist das menu</p>
-        <p>Hier ist das menu</p>
-        <p>Hier ist das menu</p>
-        <p>Hier ist das menu</p>
-        <p>Hier ist das menu</p>
-        <p>Hier ist das menu</p>
-        <p>Hier ist das menu</p>
-        <p>Hier ist das menu</p>
-        <p>Hier ist das menu</p>
-        <p>Hier ist das menu</p>
-        <p>Hier ist das menu</p>
+       
+        <mat-nav-list>
+          <a mat-list-item routerLink="/userlist" routerLinkActive="active">
+            <mat-icon matListIcon>account_box</mat-icon>User
+          </a>
+          <a mat-list-item routerLink="/projectlist" routerLinkActive="active">
+              <mat-icon matListIcon>library_books</mat-icon>Projects
+          </a>
+        </mat-nav-list>
+            
       </mat-sidenav>
 
       <mat-sidenav-content>
