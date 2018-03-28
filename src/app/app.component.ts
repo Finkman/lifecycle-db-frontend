@@ -14,18 +14,29 @@ export class AppComponent {
 
   mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
-
-  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
-     this.mobileQuery = media.matchMedia('(max-width: 600px)');
-     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
-      this.mobileQuery.addListener(this._mobileQueryListener);
+  private _updateLayoutListener: (e) => void;
+  
+  public updateLayoutListener(e){
+    this.navIsOpened = !e.matches;
+    this.changeDetectorRef.detectChanges();
   }
 
-  toggle(){
+  constructor(public changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this._updateLayoutListener = (e) => this.updateLayoutListener(e);
+    this.mobileQuery.addListener(this._mobileQueryListener);
+    this.mobileQuery.addListener(this._updateLayoutListener);
+    this.navIsOpened = !this.mobileQuery.matches;
+  }
+
+  toggle(): void{
     this.navIsOpened = !this.navIsOpened;
+    this.changeDetectorRef.detectChanges();
   }
 
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
+    this.mobileQuery.removeListener(this._updateLayoutListener);
   }
 }

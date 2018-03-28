@@ -2,12 +2,11 @@
 
 <div class="main-container" [class.main-is-mobile]="mobileQuery.matches">
     <mat-toolbar color="primary" class="main-toolbar">
-      <button mat-icon-button (click)="toggle()"><mat-icon>menu</mat-icon></button>
+      <button *ngIf="mobileQuery.matches" mat-icon-button (click)="toggle()"><mat-icon>menu</mat-icon></button>
       <h1 class="main-app-name">{{title}}</h1>
     </mat-toolbar>
-
     <mat-sidenav-container class="main-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
-      <mat-sidenav #snav [opened]="mobileQuery.matches ? navIsOpened : true" [mode]="mobileQuery.matches ? 'push' : 'side'" [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
+      <mat-sidenav #snav [(opened)]="navIsOpened" [mode]="mobileQuery.matches ? 'push' : 'side'" [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
         <p>A Hier ist das menu</p>
         <p>Hier ist das menu</p>
         <p>Hier ist das menu</p>
