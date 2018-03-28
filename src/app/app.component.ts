@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ChangeDetectorRef } from '@angular/core';
 import { LayoutModule } from '@angular/cdk/layout';
+import { AuthenticationService } from './authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +22,8 @@ export class AppComponent {
     this.changeDetectorRef.detectChanges();
   }
 
-  constructor(public changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
+  constructor(public changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,
+    private authService: AuthenticationService) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this._updateLayoutListener = (e) => this.updateLayoutListener(e);
