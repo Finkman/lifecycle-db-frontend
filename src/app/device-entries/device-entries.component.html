@@ -33,7 +33,9 @@
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
+    <div *ngIf="canAddEntries">
     <button class="btn" *ngIf="!addEntryVisible" (click)="newEntry()">+</button>
     <app-add-device-entry *ngIf="addEntryVisible" [deviceId]="deviceId" (onAdded)="onAdded($event)"></app-add-device-entry>
+    </div>
   </mat-card-content>
 </mat-card>

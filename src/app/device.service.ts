@@ -6,11 +6,13 @@ import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Device, DeviceEntry, Project } from './device';
 
+import { appConfig } from './app.config';
+
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
-const baseUrl = 'http://lifecycle.finktronic.de/api';
+const baseUrl = appConfig.apiBaseUrl;
 
 @Injectable()
 export class DeviceService {
@@ -88,6 +90,7 @@ export class DeviceService {
   }
 
   addDeviceEntry(entry: DeviceEntry): Observable<DeviceEntry> {
+    //if(localStorage.getItem['currentUser'] )
     return this.http.post<DeviceEntry>(this.entriesUrl, entry, httpOptions)
       .pipe(
         tap(entry => this.log(`added entry w/ id=${entry.id}`)),
