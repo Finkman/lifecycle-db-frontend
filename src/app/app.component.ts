@@ -10,6 +10,7 @@ import {LayoutModule} from '@angular/cdk/layout';
 })
 export class AppComponent {
   title = 'LifecycleDbFrontend';
+  navIsOpened: boolean = false;
 
   mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
@@ -20,6 +21,9 @@ export class AppComponent {
       this.mobileQuery.addListener(this._mobileQueryListener);
   }
 
+  toggle(){
+    this.navIsOpened = !this.navIsOpened;
+  }
 
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
