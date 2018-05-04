@@ -8,13 +8,14 @@ import {
   HttpInterceptor,
   HTTP_INTERCEPTORS
 } from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
+import {Observable, of, throwError} from 'rxjs';
+import {delay, mergeMap, materialize, dematerialize} from 'rxjs/operators';
+// import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
-import 'rxjs/add/operator/delay';
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/operator/materialize';
-import 'rxjs/add/operator/dematerialize';
+// import 'rxjs/add/operator/delay';
+// import 'rxjs/add/operator/mergeMap';
+// import 'rxjs/add/operator/materialize';
+// import 'rxjs/add/operator/dematerialize';
 
 import {User, AccessLevel} from '../models/user';
 
@@ -24,8 +25,8 @@ export class FakeLoginProvider implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler):
       Observable<HttpEvent<any>> {
-    return Observable.of(null)
-        .mergeMap(() => {
+    return of(null).pipe(
+        mergeMap(() => {
 
           if (request.url.endsWith('/api/authenticate.php') &&
               request.method === 'POST') {
@@ -51,23 +52,20 @@ export class FakeLoginProvider implements HttpInterceptor {
                 level: user.level,
               };
 
-              return Observable.of(new HttpResponse({status: 200, body: body}));
+              return of(new HttpResponse({status: 200, body: body}));
             } else {
               console.log(`fake: login does not match`);
-              return Observable.throw('Username or password is incorrect');
+              return throwError('Username or password is incorrect');
             }
           }
 
           if (request.url.endsWith('/api/userList.php')) {
-            return Observable.of(
-                new HttpResponse({status: 200, body: fakedUsers}));
+            return of(new HttpResponse({status: 200, body: fakedUsers}));
           }
 
           return next.handle(request);
-        })
-        .materialize()
-        .delay(500)
-        .dematerialize();
+        }),
+        materialize(), delay(500), dematerialize());
   }
 }
 
