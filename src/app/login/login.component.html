@@ -1,7 +1,9 @@
 <div id="outPopUp">
   <mat-card>
     <mat-card-header>
-      <mat-card-title><h3>Login</h3></mat-card-title>
+      <mat-card-title>
+        <h3>Login</h3>
+      </mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <form class="login-form" (ngSubmit)="login()" #entryForm="ngForm">
@@ -12,8 +14,8 @@
           <input name="password" type="password" matInput placeholder="Password" [(ngModel)]="model.password">
         </mat-form-field>
         <button [disabled]="loading" mat-raised-button type="submit" color="primary" (ngSubmit)="login()">Submit</button>
-       <!-- <button mat-raised-button>Register</button> -->
+        <!-- <button mat-raised-button>Register</button> -->
       </form>
     </mat-card-content>
   </mat-card>
-</div> 
+</div>
