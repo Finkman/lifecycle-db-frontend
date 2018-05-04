@@ -11,25 +11,32 @@ const baseUrl = appConfig.userBaseUrl;
 const authenticateUrl = `${baseUrl}/authenticate.php`;
 const userListUrl = `${baseUrl}/userList.php`;
 
+const httpOptions = {
+  headers: new HttpHeaders(
+      {'Content-Type': 'application/json', 'Authorization': 'my-auth-token'})
+};
+
 @Injectable()
 export class AuthenticationService {
   constructor(private http: HttpClient) {}
 
   login(username: string, password: string) {
-    let hash = Md5.hashStr(password);
-    return this.http
-        .post<any>(authenticateUrl, {username: username, passwordHash: hash})
-        .map(user => {
-          // it was successful
-          if (user && user.token) {
-            // store it in local storage
-            console.log("authService: store user");
-            let reUser = user as User;
-            localStorage.setItem('currentUser', JSON.stringify(user));
-          }
+    let hash = Md5.hashStr(password) as string;
+    let formData = new FormData();
+    formData.append('username', username);
+    formData.append('passwordHash', hash);
+    return this.http.post<any>(authenticateUrl, formData).map(user => {
+      // it was successful
+      console.log(user);
+      if (user && user.token) {
+        // store it in local storage
+        console.log("authService: store user");
+        let reUser = user as User;
+        localStorage.setItem('currentUser', JSON.stringify(user));
+      }
 
-          return user;
-        });
+      return user;
+    });
   }
 
   reload() {
