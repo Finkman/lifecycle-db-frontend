@@ -9,12 +9,6 @@ import {
 } from '@angular/common/http';
 import {Observable, of, throwError} from 'rxjs';
 import {delay, mergeMap, materialize, dematerialize} from 'rxjs/operators';
-// import 'rxjs/add/observable/of';
-import 'rxjs/add/observable/throw';
-// import 'rxjs/add/operator/delay';
-// import 'rxjs/add/operator/mergeMap';
-// import 'rxjs/add/operator/materialize';
-// import 'rxjs/add/operator/dematerialize';
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
