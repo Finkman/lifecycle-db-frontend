@@ -63,6 +63,7 @@ import {jwtInterceptorProvider} from './provider/JwtInterceptor';
 import {fakeBackendProvider} from './provider/fakte-backend.provider';
 import {fakeLoginProvider} from './provider/fake-login.provider';
 import {UserListComponent} from './user-list/user-list.component';
+import {AddUserComponent} from './add-user/add-user.component';
 
 // See the Moment.js docs for the meaning of these formats:
 // https://momentjs.com/docs/#/displaying/format/
@@ -80,7 +81,7 @@ export const MY_FORMATS = {
   declarations: [
     AppComponent, DeviceEntriesComponent, DeviceListComponent,
     AddDeviceEntryComponent, ProjectListComponent, LoginComponent,
-    UserListComponent
+    UserListComponent, AddUserComponent
   ],
   imports: [
     BrowserModule,
@@ -120,10 +121,10 @@ export const MY_FORMATS = {
     jwtInterceptorProvider,
 
     // hook-in fake backend
-    // fakeBackendProvider,
+    fakeBackendProvider,
 
     // hook-in fake login provider
-    // fakeLoginProvider
+    fakeLoginProvider
   ],
   bootstrap: [AppComponent]
 })

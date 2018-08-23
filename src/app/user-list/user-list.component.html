@@ -23,7 +23,11 @@
           </table>
         </mat-panel-description>
       </mat-expansion-panel>
-      
+
     </mat-accordion>
   </mat-card-content>
 </mat-card>
+<div *ngIf="canAddEntries">
+  <button class="btn" *ngIf="!addUserVisible" (click)="showNewUserForm()">+</button>
+  <app-add-user *ngIf="addUserVisible" (onAdded)="onAdded($event)"></app-add-user>
+</div>
