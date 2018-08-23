@@ -3,29 +3,28 @@
     <mat-card-title>Add User</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <form class="form-box" *ngIf="!isLocked" (ngSubmit)="onSubmit()" #entryForm="ngForm">
+    <form [formGroup]="addUserForm" class="form-box" *ngIf="!isLocked" (ngSubmit)="onSubmit()" #entryForm="ngForm">
 
       <mat-form-field class="row-full-width">
-        <input name="username" placeholder="Username" matInput [formControl]="usernameControl" [(ngModel)]="model.username" />
-        <mat-error *ngIf="usernameControl.invalid">{{getUsernameError()}}</mat-error>
+        <input name="username" placeholder="Username" matInput formControlName="username" />
+        <mat-error *ngIf="username.invalid">{{getUsernameError()}}</mat-error>
       </mat-form-field>
 
       <mat-form-field class="row-full-width">
-        <input name="email" placeholder="Email" matInput [formControl]="emailControl" [(ngModel)]="model.email" />
-        <mat-error *ngIf="emailControl.invalid">{{getEmailError()}}</mat-error>
+        <input name="email" placeholder="Email" matInput formControlName="email" />
+        <mat-error *ngIf="email.invalid">{{getEmailError()}}</mat-error>
       </mat-form-field>
 
       <mat-form-field class="row-full-width">
-        <input name="firstname" placeholder="First Name" matInput [formControl]="firstnameControl" [(ngModel)]="model.firstName"
-        />
+        <input name="firstname" placeholder="First Name" matInput formControlName="firstname" />
       </mat-form-field>
 
       <mat-form-field class="row-full-width">
-        <input name="lastname" placeholder="Last Name" matInput [formControl]="lastnameControl" [(ngModel)]="model.lastName" />
+        <input name="lastname" placeholder="Last Name" matInput formControlName="lastname" />
       </mat-form-field>
 
       <button (click)="cancel()" class="btn">Cancel</button>
-      <button type="submit" class="btn btn-success">Create</button>
+      <button type="submit" class="btn btn-success" [disabled]="addUserForm.invalid || addUserForm.pending">Create</button>
     </form>
     <div *ngIf="isLocked"><label>Please wait...</label></div>
   </mat-card-content>
