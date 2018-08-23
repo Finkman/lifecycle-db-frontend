@@ -63,6 +63,16 @@ export class FakeLoginProvider implements HttpInterceptor {
             return throwError(`Body of request is not user data`);
           }
 
+          if (fakedUsers.some(e => e.username.toLowerCase() === newUser.username.toLowerCase())) {
+            console.log(`username already exists`);
+            return throwError(`Username ${newUser.username} already exists`);
+          }
+
+          if (fakedUsers.some(e => e.email.toLowerCase() === newUser.email.toLowerCase())) {
+            console.log(`email already exists`);
+            return throwError(`Email ${newUser.email} already exists`);
+          }
+
           lastIdNumber++;
           newUser._id = `id${lastIdNumber}`;
           newUser.passwordHash = `${Md5.hashStr("1234")}`
