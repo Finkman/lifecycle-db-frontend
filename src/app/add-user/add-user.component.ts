@@ -1,7 +1,8 @@
-import {Component, OnInit, EventEmitter, Output} from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 
-import {FormControl} from '@angular/forms';
-import {User, AccessLevel} from '../models/user';
+import { FormControl } from '@angular/forms';
+import { User, AccessLevel } from '../models/user';
+import { AuthenticationService } from '../authentication.service';
 
 @Component({
   selector: 'app-add-user',
@@ -19,7 +20,7 @@ export class AddUserComponent implements OnInit {
 
   model: User;
 
-  constructor() {}
+  constructor(private authService: AuthenticationService) { }
 
   ngOnInit() {
     this.isLocked = false;
@@ -30,11 +31,10 @@ export class AddUserComponent implements OnInit {
 
   onSubmit() {
     this.isLocked = true;
-    console.log(`Add user: ${this.model.username}`);
-    {
+    this.authService.addUser(this.model).subscribe(res => {
       this.onAdded.emit(true);
       this.isLocked = false;
-    }
+    });
   }
 
   cancel() { this.onAdded.emit(false); }

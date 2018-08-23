@@ -56,11 +56,29 @@ export class FakeLoginProvider implements HttpInterceptor {
           return of(new HttpResponse({ status: 200, body: fakedUsers }));
         }
 
+        if (request.url.endsWith('/api/addUser.php')) {
+          let newUser: User = request.body as User;
+          if (!newUser) {
+            console.log(`Body of request is not user data`);
+            return throwError(`Body of request is not user data`);
+          }
+
+          lastIdNumber++;
+          newUser._id = `id${lastIdNumber}`;
+          newUser.passwordHash = `${Md5.hashStr("1234")}`
+
+          fakedUsers.push(newUser);
+          console.log(`Added user ${newUser.username} with id ${newUser._id} to faked users`);
+          return of(new HttpResponse({ status: 200, body: newUser }));
+        }
+
         return next.handle(request);
       }),
       materialize(), delay(500), dematerialize());
   }
 }
+
+let lastIdNumber: number = 15;
 
 let fakedUsers: User[] = [
   {

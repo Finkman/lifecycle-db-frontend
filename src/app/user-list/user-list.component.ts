@@ -20,6 +20,10 @@ export class UserListComponent implements OnInit {
     this.canAddEntries = this.authService.getCurrentUser().level == AccessLevel.Creator;
     this.addUserVisible = false;
     this.username = this.authService.getCurrentUser().username;
+    this.getUserList();
+  }
+
+  getUserList() {
     this.authService.getUserList().subscribe(list => this.userList = list);
   }
 
@@ -27,7 +31,7 @@ export class UserListComponent implements OnInit {
 
   onAdded(success: boolean) {
     if (success) {
-      //  this.getDeviceEntries();
+      this.getUserList();
     }
 
     this.addUserVisible = false;
