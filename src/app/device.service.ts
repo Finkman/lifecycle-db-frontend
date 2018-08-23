@@ -1,14 +1,14 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import {Observable, of} from 'rxjs';
-import {catchError, map, tap} from 'rxjs/operators';
-import {Device, DeviceEntry, Project} from './device';
+import { Observable, of } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
+import { Device, DeviceEntry, Project } from './device';
 
-import {appConfig} from './app.config';
+import { appConfig } from './app.config';
 
 const httpOptions = {
-  headers: new HttpHeaders({'Content-Type': 'application/json'})
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
 const baseUrl = appConfig.apiBaseUrl;
@@ -20,8 +20,9 @@ export class DeviceService {
   private entryTypesUrl = `${baseUrl}/entryTypes.php`;
   private entryDataTagsUrl = `${baseUrl}/dataTags.php`;
   private entryProjectsUrl = `${baseUrl}/projects.php`;
+  private addDeviceUrl = `${baseUrl}/addDevice.php`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
@@ -45,8 +46,8 @@ export class DeviceService {
   getDeviceEntries(id: number): Observable<DeviceEntry[]> {
     const url = `${this.entriesUrl}?device=${id}`;
     return this.http.get<DeviceEntry[]>(url).pipe(
-        tap(heroes => this.log(`fetched device entrires`)),
-        catchError(this.handleError('getDeviceEntries', [])));
+      tap(heroes => this.log(`fetched device entrires`)),
+      catchError(this.handleError('getDeviceEntries', [])));
   }
 
   getDevice(id: number): Observable<Device> {
@@ -64,36 +65,44 @@ export class DeviceService {
     }
 
     return this.http.get<Device[]>(url).pipe(
-        tap(devices => this.log(`fetched devices`)),
-        catchError(this.handleError('getDeviceList', [])));
+      tap(devices => this.log(`fetched devices`)),
+      catchError(this.handleError('getDeviceList', [])));
   }
 
   getEntryTypes(): Observable<string[]> {
     const url = this.entryTypesUrl;
     return this.http.get<string[]>(url).pipe(
-        tap(list => this.log('fetch entryTypes')),
-        catchError(this.handleError('getEntryTypes', [])));
+      tap(list => this.log('fetch entryTypes')),
+      catchError(this.handleError('getEntryTypes', [])));
   }
 
   getDataTags(dataType: string): Observable<any[]> {
     const url = `${this.entryDataTagsUrl}?type=${dataType}`;
     return this.http.get<any[]>(url).pipe(
-        tap(list => this.log('fetch DataTags')),
-        catchError(this.handleError('getEntryTypes', [])));
+      tap(list => this.log('fetch DataTags')),
+      catchError(this.handleError('getEntryTypes', [])));
   }
 
   addDeviceEntry(entry: DeviceEntry): Observable<DeviceEntry> {
     // if(localStorage.getItem['currentUser'] )
     return this.http.post<DeviceEntry>(this.entriesUrl, entry, httpOptions)
-        .pipe(
-            tap(entry => this.log(`added entry w/ id=${entry.id}`)),
-            catchError(this.handleError<DeviceEntry>('addDeviceEntry')));
+      .pipe(
+        tap(entry => this.log(`added entry w/ id=${entry.id}`)),
+        catchError(this.handleError<DeviceEntry>('addDeviceEntry')));
   }
 
   getProjects(): Observable<Project[]> {
     return this.http.get<Project[]>(this.entryProjectsUrl)
-        .pipe(
-            tap(entry => this.log('get projects')),
-            catchError(this.handleError<Project[]>('getProjects')))
+      .pipe(
+        tap(entry => this.log('get projects')),
+        catchError(this.handleError<Project[]>('getProjects')))
+  }
+
+  addDevice(project: Project): Observable<any> {
+    return this.http.get<Device>(this.addDeviceUrl + `?projectId=${project.id}`, httpOptions)
+      .pipe(
+        tap(d => this.log(`added device w/ id=${d.sn} for project ${d.projectId}`)),
+        catchError(this.handleError<Device>('addDevice'))
+      );
   }
 }

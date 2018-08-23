@@ -19,35 +19,37 @@
           <mat-header-cell *matHeaderCellDef> S/N </mat-header-cell>
           <mat-cell *matCellDef="let element"><a routerLink="/entries/{{element.id}}"> {{element.sn}} </a></mat-cell>
         </ng-container>
-    
+
         <!-- date Column -->
         <ng-container matColumnDef="production_date">
           <mat-header-cell *matHeaderCellDef> Production </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{element.production_date | date:'dd-MM-yyyy'}} </mat-cell>
         </ng-container>
-    
+
         <!-- hw Column -->
         <ng-container matColumnDef="hwVersion">
           <mat-header-cell *matHeaderCellDef> Hw-Version </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{element.hwVersion}} </mat-cell>
         </ng-container>
-    
+
         <!-- fw Column -->
         <ng-container matColumnDef="fwVersion">
           <mat-header-cell *matHeaderCellDef> Fw-Version </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{element.fwVersion}} </mat-cell>
         </ng-container>
-    
+
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
       </mat-table>
 
-      <div *ngIf="!(p.devices?.length) && p.initialLoaded"><p>no devices found</p></div>
+      <div *ngIf="!(p.devices?.length) && p.initialLoaded">
+        <p>no devices found</p>
+      </div>
+
+      <button class="btn" *ngIf="canAddDevice" (click)="onAddDevice(p)">+</button>
 
     </div>
 
   </mat-expansion-panel>
 
 </mat-accordion>
-
-

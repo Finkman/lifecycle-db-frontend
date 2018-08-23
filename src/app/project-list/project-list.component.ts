@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { DeviceService } from '../device.service';
 import { Device, Project } from '../device';
-import {map} from 'rxjs/operators/map';
+import { map } from 'rxjs/operators/map';
+import { AuthenticationService } from '../authentication.service';
+import { AccessLevel } from '../models/user';
 
-export class ProjectModel{
+export class ProjectModel {
   project: Project;
   devices: Device[];
   initialLoaded: boolean = false;
@@ -17,26 +19,29 @@ export class ProjectModel{
 })
 export class ProjectListComponent implements OnInit {
   isLoading: boolean = false;
+  canAddDevice: boolean = false;
   displayedColumns = ['sn', 'production_date', 'hwVersion', 'fwVersion'];
-  projects : ProjectModel[] = [];
+  projects: ProjectModel[] = [];
 
-  constructor( private deviceService: DeviceService) { }
+  constructor(private deviceService: DeviceService, private authService: AuthenticationService) { }
 
   ngOnInit() {
+    const userLevel = this.authService.getCurrentUser().level;
+    this.canAddDevice = userLevel == AccessLevel.Creator
     this.getProjectList();
   }
 
-  getProjectList(): void{
+  getProjectList(): void {
     this.isLoading = true;
     this.deviceService.getProjects().pipe(
       map(ps => {
         let models: ProjectModel[] = [];
-        for (var i = 0; i < ps.length; i++){
+        for (var i = 0; i < ps.length; i++) {
           let m = new ProjectModel();
           m.project = ps[i];
           models.push(m);
         }
-        
+
         return models;
       })
     ).subscribe(
@@ -47,7 +52,7 @@ export class ProjectListComponent implements OnInit {
     );
   }
 
-  updateDeviceList(model: ProjectModel){
+  updateDeviceList(model: ProjectModel) {
     model.loading = true;
     this.deviceService.getDeviceList(model.project.id)
       .subscribe(
@@ -57,6 +62,12 @@ export class ProjectListComponent implements OnInit {
           model.initialLoaded = true;
         }
       );
+  }
+
+  onAddDevice(projectModel: ProjectModel) {
+    this.deviceService.addDevice(projectModel.project).subscribe(any =>
+      this.updateDeviceList(projectModel)
+    );
   }
 
 }

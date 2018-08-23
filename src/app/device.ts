@@ -20,6 +20,7 @@ export class DeviceEntry {
 export class Device {
   id: number;
   sn: number;
+  projectId: number;
   production_date: Date;
   hwVersion: string;
   fwVersion: string;

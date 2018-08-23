@@ -33,7 +33,8 @@ export class DeviceEntriesComponent implements OnInit {
     private authenticationService: AuthenticationService, private location: Location, private route: ActivatedRoute, ) { }
 
   ngOnInit() {
-    this.canAddEntries = this.authenticationService.getCurrentUser().level == AccessLevel.Creator; 
+    const userLevel = this.authenticationService.getCurrentUser().level;
+    this.canAddEntries = userLevel == AccessLevel.Creator;
     this.addEntryVisible = false;
     this.dataSource.sort = this.sort;
     this.deviceId = +this.route.snapshot.paramMap.get('deviceId');
