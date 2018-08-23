@@ -100,4 +100,16 @@ export class AuthenticationService {
         tap(entry => console.log(`added user ${entry.username}`)),
         catchError(this.handleError<User>('addDeviceEntry')));
   }
+
+  isUsernameRegistered(username: String): Observable<boolean> {
+    console.log(`Check if ${username} exists`);
+    return this.getUserList().map(list => list.some(user => user.username == username));
+  }
+
+  isEmailRegistered(email: String): Observable<boolean> {
+    console.log(`Check if ${email} exists`);
+    // return this.getUserList().map(list => list.some(user => user.email == email));
+    return this.getUserList().map(list => list.some(user => user.email == email));
+  }
+
 }
