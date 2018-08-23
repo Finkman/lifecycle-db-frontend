@@ -6,11 +6,20 @@
     <form class="form-box" *ngIf="!isLocked" (ngSubmit)="onSubmit()" #entryForm="ngForm">
 
       <mat-form-field class="row-full-width">
-        <input name="username" placeholder="Username" matInput [formControl]="usernameControl" />
+        <input name="username" placeholder="Username" matInput [formControl]="usernameControl" [(ngModel)]="model.username" />
       </mat-form-field>
 
       <mat-form-field class="row-full-width">
-        <input name="email" placeholder="Email" matInput [formControl]="emailControl" />
+        <input name="email" placeholder="Email" matInput [formControl]="emailControl" [(ngModel)]="model.email" />
+      </mat-form-field>
+
+      <mat-form-field class="row-full-width">
+        <input name="firstname" placeholder="First Name" matInput [formControl]="firstnameControl" [(ngModel)]="model.firstName"
+        />
+      </mat-form-field>
+
+      <mat-form-field class="row-full-width">
+        <input name="lastname" placeholder="Last Name" matInput [formControl]="lastnameControl" [(ngModel)]="model.lastName" />
       </mat-form-field>
 
       <button (click)="cancel()" class="btn">Cancel</button>

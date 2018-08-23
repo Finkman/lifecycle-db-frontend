@@ -1,6 +1,7 @@
 import {Component, OnInit, EventEmitter, Output} from '@angular/core';
 
 import {FormControl} from '@angular/forms';
+import {User, AccessLevel} from '../models/user';
 
 @Component({
   selector: 'app-add-user',
@@ -12,16 +13,24 @@ export class AddUserComponent implements OnInit {
 
   usernameControl: FormControl = new FormControl();
   emailControl: FormControl = new FormControl();
+  firstnameControl: FormControl = new FormControl();
+  lastnameControl: FormControl = new FormControl();
   isLocked: boolean = false;
 
+  model: User;
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.isLocked = false;
+    this.model = new User();
+    this.model._id = "";
+    this.model.level = AccessLevel.Visitor;
+  }
 
   onSubmit() {
     this.isLocked = true;
-    // do stuff to create
+    console.log(`Add user: ${this.model.username}`);
     {
       this.onAdded.emit(true);
       this.isLocked = false;

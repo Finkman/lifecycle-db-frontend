@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {AuthenticationService} from '../authentication.service';
+import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '../authentication.service';
 
-import {User} from '../models/user';
+import { User, AccessLevel } from '../models/user';
 
 @Component({
   selector: 'app-user-list',
@@ -9,14 +9,15 @@ import {User} from '../models/user';
   styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent implements OnInit {
-  canAddEntries: boolean = true;
+  canAddEntries: boolean = false;
   addUserVisible: boolean;
   username: string;
   userList: User[] = [];
 
-  constructor(private authService: AuthenticationService) {}
+  constructor(private authService: AuthenticationService) { }
 
   ngOnInit() {
+    this.canAddEntries = this.authService.getCurrentUser().level == AccessLevel.Creator;
     this.addUserVisible = false;
     this.username = this.authService.getCurrentUser().username;
     this.authService.getUserList().subscribe(list => this.userList = list);
