@@ -49,7 +49,7 @@ export class AddUserComponent implements OnInit {
     } else if (this.usernameControl.hasError('minlength') || this.usernameControl.hasError('minlength')) {
       return `Length must be in range of [${usernameLength.min}, ${usernameLength.max}]`;
     } else {
-      return 'Unkown error!';
+      return 'Unknown error!';
     }
   }
 
@@ -59,7 +59,7 @@ export class AddUserComponent implements OnInit {
     } else if (this.emailControl.hasError('email')) {
       return 'Invalid email address';
     } else {
-      return 'Unkown error';
+      return 'Unknown error';
     }
   }
 
