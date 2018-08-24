@@ -1,6 +1,6 @@
 import {Component, OnInit, EventEmitter, Input, Output} from '@angular/core';
 
-import {DeviceEntry, EntryType} from '../device';
+import {DeviceEntry, EntryType, Device} from '../device';
 import {DeviceService} from '../device.service';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
@@ -39,6 +39,8 @@ export class AddDeviceEntryComponent implements OnInit {
   isLocked: boolean = false;
   tagsLoaded: boolean = false;
 
+  parentDevice: Device = new Device();
+
 
   constructor(private deviceService: DeviceService, ) {}
 
@@ -47,27 +49,30 @@ export class AddDeviceEntryComponent implements OnInit {
     this.model = new DeviceEntry();
     this.model.date = new Date(Date.now());
     this.model.device = this.deviceId;
+    this.deviceService.getDevice(this.deviceId)
+        .subscribe(d => this.parentDevice = d);
     this.model.type = this.typeNames[0];
     this.filteredOptions = this.dataInputControl.valueChanges.pipe(
         startWith(''), map(val => this.filter(val)));
 
     this.typeSelectControl.valueChanges.subscribe(val => {
       console.log(`Changed to ${val}`);
-      this.getDataTypeTags();
+      this.getDataTypeTags(val);
     });
   }
 
-  getDataTypeTags() {
-    console.log(`Get DataTags for ${this.model.type}`);
-    this.deviceService.getDataTags(this.model.type).subscribe((list) => {
-      let newList: string[] = [];
-      for (let tuple of list) {
-        newList.push(tuple.data);
-      }
-      this.dataOptions = newList;
-      // retrigger option load and clear field
-      this.dataInputControl.setValue('');
-    });
+  getDataTypeTags(typeString: String) {
+    console.log(`Get DataTags for ${typeString}`);
+    this.deviceService.getDataTags(typeString, this.parentDevice.projectId)
+        .subscribe((list) => {
+          let newList: string[] = [];
+          for (let tuple of list) {
+            newList.push(tuple.data);
+          }
+          this.dataOptions = newList;
+          // retrigger option load and clear field
+          this.dataInputControl.setValue('');
+        });
   }
 
 

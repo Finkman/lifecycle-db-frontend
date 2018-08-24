@@ -1,16 +1,16 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 
-import { MatTableDataSource, MatSort } from '@angular/material';
+import {MatTableDataSource, MatSort} from '@angular/material';
 
-import { DeviceEntry, Device } from '../device';
-import { DeviceService } from '../device.service';
-import { AuthenticationService } from '../authentication.service';
+import {DeviceEntry, Device} from '../device';
+import {DeviceService} from '../device.service';
+import {AuthenticationService} from '../authentication.service';
 
-import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+import {ActivatedRoute} from '@angular/router';
+import {Location} from '@angular/common';
 
-import { OrderPipe } from 'ngx-order-pipe';
-import { AccessLevel } from '../models/user';
+import {OrderPipe} from 'ngx-order-pipe';
+import {AccessLevel} from '../models/user';
 
 @Component({
   selector: 'app-device-entries',
@@ -29,8 +29,10 @@ export class DeviceEntriesComponent implements OnInit {
 
   addEntryVisible: boolean;
 
-  constructor(private orderPipe: OrderPipe, private deviceService: DeviceService,
-    private authenticationService: AuthenticationService, private location: Location, private route: ActivatedRoute, ) { }
+  constructor(
+      private orderPipe: OrderPipe, private deviceService: DeviceService,
+      private authenticationService: AuthenticationService,
+      private location: Location, private route: ActivatedRoute, ) {}
 
   ngOnInit() {
     const userLevel = this.authenticationService.getCurrentUser().level;
@@ -44,26 +46,21 @@ export class DeviceEntriesComponent implements OnInit {
 
   getDeviceEntries(): void {
     this.isLoading = true;
-    this.deviceService.getDeviceEntries(this.deviceId).
-      subscribe((list) => {
-        this.isLoading = false;
-        this.dataSource.data = list;
-      });
+    this.deviceService.getDeviceEntries(this.deviceId).subscribe((list) => {
+      this.isLoading = false;
+      this.dataSource.data = list;
+    });
   }
 
   getDevice(): void {
     console.log(this.deviceId);
     this.deviceService.getDevice(this.deviceId)
-      .subscribe(d => this.parentDevice = d);
+        .subscribe(d => this.parentDevice = d as Device);
   }
 
-  goBack(): void {
-    this.location.back();
-  }
+  goBack(): void { this.location.back(); }
 
-  newEntry(): void {
-    this.addEntryVisible = true;
-  }
+  newEntry(): void { this.addEntryVisible = true; }
 
   onAdded(success: boolean) {
     if (success) {
@@ -72,6 +69,4 @@ export class DeviceEntriesComponent implements OnInit {
 
     this.addEntryVisible = false;
   }
-
-
 }
