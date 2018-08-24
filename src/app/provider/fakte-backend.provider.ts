@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {
   HttpRequest,
   HttpResponse,
@@ -7,153 +7,156 @@ import {
   HttpInterceptor,
   HTTP_INTERCEPTORS
 } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
-import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
-import { Device } from '../device';
+import {Observable, of, throwError} from 'rxjs';
+import {delay, mergeMap, materialize, dematerialize} from 'rxjs/operators';
+import {Device} from '../device';
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
-  constructor() { }
+  constructor() {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler):
-    Observable<HttpEvent<any>> {
+      Observable<HttpEvent<any>> {
     // local storage of users on backend
     let users: any[] = JSON.parse(localStorage.getItem('users')) || [];
 
     return of(null).pipe(
-      mergeMap(() => {
+        mergeMap(() => {
 
-        if (request.url.indexOf('/api/devices.php') != -1) {
-          console.log(request.url);
-          let lastIndex = request.url.indexOf('?project=');
-          let body = [];
-          if (lastIndex != -1) {
-            let projectIndex = +request.url.substr(lastIndex + 9);
-            console.log(`fake: get devices for project ${projectIndex}`);
+          if (request.url.indexOf('/api/devices.php') != -1) {
+            console.log(request.url);
+            let lastIndex = request.url.indexOf('?project=');
+            let body = [];
+            if (lastIndex != -1) {
+              let projectIndex = +request.url.substr(lastIndex + 9);
+              console.log(`fake: get devices for project ${projectIndex}`);
+              if (projectIndex == NaN) {
+                return throwError('given project is no index number');
+              }
+              body = devices.filter(d => d.project == projectIndex);
+            } else {
+              lastIndex = request.url.indexOf('?device=');
+              if (lastIndex != -1) {
+                let deviceIndex = +request.url.substr(lastIndex + 8);
+                console.log(`fake: get device with id ${deviceIndex}`);
+                if (deviceIndex == NaN) {
+                  return throwError('given device id is not a number');
+                }
+                body = [devices.find(d => d.id == deviceIndex)];
+              } else {
+                console.log('fake: get all devices');
+                body = devices;
+              }
+            }
+
+            return of(new HttpResponse({status: 200, body: body}));
+          }
+
+          if (request.url.indexOf('/api/deviceEntries.php') != -1) {
+            let lastIndex = request.url.indexOf('?device=');
+            if (lastIndex == -1) {
+              return throwError('no device index given');
+            }
+
+            let deviceIndex = +request.url.substr(lastIndex + 8);
+            if (deviceIndex == NaN) {
+              return throwError('given device is no index number');
+            }
+
+            console.log(`Requesting device index ${deviceIndex}`);
+
+            // return some devies
+            let body = entries.filter(d => d.device == deviceIndex);
+            return of(new HttpResponse({status: 200, body: body}));
+          }
+
+          if (request.url.endsWith('/api/entryTypes.php')) {
+            let types: String[] = [];
+            entries.forEach(e => {
+              if (!types.includes(e.type)) {
+                types.push(e.type)
+              }
+            });
+            return of(new HttpResponse({status: 200, body: types}));
+          }
+
+          if (request.url.includes('/api/dataTags.php')) {
+            const key = '?type=';
+            const lastIndex = request.url.indexOf(key);
+            if (lastIndex == -1) {
+              return throwError('no type given');
+            }
+
+            const typeKey = request.url.substr(lastIndex + key.length);
+            interface DataTags {
+              type: String, data: String
+            }
+            ;
+            let dataTags: DataTags[] = [];
+            entries.forEach(e => {
+              if (e.type == typeKey &&
+                  !dataTags.some(d => d.data == e.data && d.type == e.type)) {
+                dataTags.push({type: e.type, data: e.data});
+              }
+            });
+            return of(new HttpResponse({status: 200, body: dataTags}));
+          }
+
+          if (request.url.endsWith('/api/projects.php')) {
+            let body = projects;
+            console.log("fake: project list");
+            return of(new HttpResponse({status: 200, body: body}));
+          }
+
+          if (request.url.indexOf('/api/addDevice.php') != -1) {
+            console.log(request.url);
+            const key = '?projectId=';
+            let lastIndex = request.url.indexOf(key);
+            if (lastIndex == -1) {
+              return throwError('no project index given');
+            }
+
+            let projectIndex = +request.url.substr(lastIndex + key.length);
             if (projectIndex == NaN) {
               return throwError('given project is no index number');
             }
-            body = devices.filter(d => d.project == projectIndex);
-          } else {
-            lastIndex = request.url.indexOf('?device=');
-            if (lastIndex != -1) {
-              let deviceIndex = +request.url.substr(lastIndex + 8);
-              console.log(`fake: get device with id ${deviceIndex}`);
-              if (deviceIndex == NaN) {
-                return throwError('given device id is not a number');
-              }
-              body = [devices.find(d => d.id == deviceIndex)];
+
+            console.log(`Request new device for project index ${projectIndex}`);
+
+            // check if project exists
+            let project = projects.find(p => p.id == projectIndex);
+            if (project == null) {
+              return throwError(`there is no project with id ${projectIndex}`);
             }
-            else {
-              console.log('fake: get all devices');
-              body = devices;
-            }
+
+            project.lastDeviceSn++;
+            let newdevice = new Device();
+            newdevice.id = project.lastDeviceSn;
+            newdevice.sn = project.lastDeviceSn;
+            newdevice.projectId = projectIndex;
+            newdevice.production_date = new Date();
+
+            devices.push({
+              id: newdevice.id,
+              project: newdevice.projectId,
+              sn: newdevice.sn,
+              production_date: newdevice.production_date.toDateString(),
+              hwVersion: newdevice.hwVersion,
+              fwVersion: newdevice.fwVersion
+            });
+
+            return of(new HttpResponse({status: 200, body: newdevice}));
           }
 
-          return of(new HttpResponse({ status: 200, body: body }));
-        }
+          // pass request
+          return next.handle(request);
 
-        if (request.url.indexOf('/api/deviceEntries.php') != -1) {
-          let lastIndex = request.url.indexOf('?device=');
-          if (lastIndex == -1) {
-            return throwError('no device index given');
-          }
-
-          let deviceIndex = +request.url.substr(lastIndex + 8);
-          if (deviceIndex == NaN) {
-            return throwError('given device is no index number');
-          }
-
-          console.log(`Requesting device index ${deviceIndex}`);
-
-          // return some devies
-          let body = entries.filter(d => d.device == deviceIndex);
-          return of(new HttpResponse({ status: 200, body: body }));
-        }
-
-        if (request.url.endsWith('/api/entryTypes.php')) {
-          let types: String[] = [];
-          entries.forEach(e => {
-            if (!types.includes(e.type)) {
-              types.push(e.type)
-            }
-          });
-          return of(new HttpResponse({ status: 200, body: types }));
-        }
-
-        if (request.url.includes('/api/dataTags.php')) {
-          const key = '?type=';
-          const lastIndex = request.url.indexOf(key);
-          if (lastIndex == -1) {
-            return throwError('no type given');
-          }
-
-          const typeKey = request.url.substr(lastIndex + key.length);
-          interface DataTags { type: String, data: String };
-          let dataTags: DataTags[] = [];
-          entries.forEach(e => {
-            if (e.type == typeKey && !dataTags.some(d => d.data == e.data && d.type == e.type) {
-              dataTags.push({ type: e.type, data: e.data });
-            }
-          });
-          return of(new HttpResponse({ status: 200, body: dataTags }));
-        }
-
-        if (request.url.endsWith('/api/projects.php')) {
-          let body = projects;
-          console.log("fake: project list");
-          return of(new HttpResponse({ status: 200, body: body }));
-        }
-
-        if (request.url.indexOf('/api/addDevice.php') != -1) {
-          console.log(request.url);
-          const key = '?projectId=';
-          let lastIndex = request.url.indexOf(key);
-          if (lastIndex == -1) {
-            return throwError('no project index given');
-          }
-
-          let projectIndex = +request.url.substr(lastIndex + key.length);
-          if (projectIndex == NaN) {
-            return throwError('given project is no index number');
-          }
-
-          console.log(`Request new device for project index ${projectIndex}`);
-
-          // check if project exists
-          let project = projects.find(p => p.id == projectIndex);
-          if (project == null) {
-            return throwError(`there is no project with id ${projectIndex}`);
-          }
-
-          project.lastDeviceSn++;
-          let newdevice = new Device();
-          newdevice.id = project.lastDeviceSn;
-          newdevice.sn = project.lastDeviceSn;
-          newdevice.projectId = projectIndex;
-          newdevice.production_date = new Date();
-
-          devices.push({
-            id: newdevice.id,
-            project: newdevice.projectId,
-            sn: newdevice.sn,
-            production_date: newdevice.production_date.toDateString(),
-            hwVersion: newdevice.hwVersion,
-            fwVersion: newdevice.fwVersion
-          });
-
-          return of(new HttpResponse({ status: 200, body: newdevice }));
-        }
-
-        // pass request
-        return next.handle(request);
-
-      }),
-      // call materialize and dematerialize to ensure delay even if an
-      // error
-      // is thrown
-      // (https://github.com/Reactive-Extensions/RxJS/issues/648)
-      materialize(), delay(500), dematerialize());
+        }),
+        // call materialize and dematerialize to ensure delay even if an
+        // error
+        // is thrown
+        // (https://github.com/Reactive-Extensions/RxJS/issues/648)
+        materialize(), delay(500), dematerialize());
   }
 }
 
@@ -168,22 +171,22 @@ export let fakeBackendProvider = {
 let entryTypes = ["HwVersion", "FwVersion", "Defect", "Shippment", "Remark"];
 
 let entries = [
-  { id: 11, device: 1, date: "2017-01-12", type: "HwVersion", data: "V1.4" },
-  { id: 12, device: 1, date: "2017-01-23", type: "FwVersion", data: "V1.3.0" },
-  { id: 13, device: 1, date: "2017-05-12", type: "Defect", data: "defect C1" },
-  { id: 14, device: 1, date: "2017-06-12", type: "FwVersion", data: "V1.3.1" }, {
+  {id: 11, device: 1, date: "2017-01-12", type: "HwVersion", data: "V1.4"},
+  {id: 12, device: 1, date: "2017-01-23", type: "FwVersion", data: "V1.3.0"},
+  {id: 13, device: 1, date: "2017-05-12", type: "Defect", data: "defect C1"},
+  {id: 14, device: 1, date: "2017-06-12", type: "FwVersion", data: "V1.3.1"}, {
     id: 15,
     device: 1,
     date: "2017-07-12",
     type: "Defect",
     data: "connector broken"
   },
-  { id: 16, device: 1, date: "2017-08-12", type: "FwVersion", data: "V1.3.2" },
-  { id: 17, device: 1, date: "2017-08-12", type: "Shippment" },
-  { id: 18, device: 1, date: "2018-05-12", type: "Shippment" },
-  { id: 19, device: 1, date: "2017-05-12", type: "Remark", data: "Reserve" },
-  { id: 20, device: 1, date: "2017-05-12", type: "FwVersion", data: "V1.3.4" },
-  { id: 21, device: 2, date: "2017-05-12", type: "HwVersion", data: "V1.4.1" }
+  {id: 16, device: 1, date: "2017-08-12", type: "FwVersion", data: "V1.3.2"},
+  {id: 17, device: 1, date: "2017-08-12", type: "Shippment"},
+  {id: 18, device: 1, date: "2018-05-12", type: "Shippment"},
+  {id: 19, device: 1, date: "2017-05-12", type: "Remark", data: "Reserve"},
+  {id: 20, device: 1, date: "2017-05-12", type: "FwVersion", data: "V1.3.4"},
+  {id: 21, device: 2, date: "2017-05-12", type: "HwVersion", data: "V1.4.1"}
 ];
 
 let devices = [
@@ -230,17 +233,37 @@ let devices = [
 ];
 
 let projects =
-  [
-    { id: 1, name: "Project A", description: "A demo project without a sense", lastDeviceSn: 3000 },
-    { id: 2, name: "Project  B", description: "Chaning the world with this!", lastDeviceSn: 3000 },
-    { id: 3, name: "Project Renasus", description: "Just a fake", lastDeviceSn: 3000 },
-    { id: 4, name: "Eminet", description: "Home Automation", lastDeviceSn: 3000 }
-  ]
+    [
+      {
+        id: 1,
+        name: "Project A",
+        description: "A demo project without a sense",
+        lastDeviceSn: 3000
+      },
+      {
+        id: 2,
+        name: "Project  B",
+        description: "Chaning the world with this!",
+        lastDeviceSn: 3000
+      },
+      {
+        id: 3,
+        name: "Project Renasus",
+        description: "Just a fake",
+        lastDeviceSn: 3000
+      },
+      {
+        id: 4,
+        name: "Eminet",
+        description: "Home Automation",
+        lastDeviceSn: 3000
+      }
+    ]
 
-let entryDataTags = [
-  { type: "HwVersion", data: "V1.4" }, { type: "FwVersion", data: "V1.3.0" },
-  { type: "Defect", data: "defect C1" }, { type: "FwVersion", data: "V1.3.1" },
-  { type: "Defect", data: "connector broken" },
-  { type: "FwVersion", data: "V1.3.2" }, { type: "Remark", data: "Reserve" },
-  { type: "FwVersion", data: "V1.3.4" }, { type: "HwVersion", data: "V1.4.1" }
-];
+    let entryDataTags = [
+      {type: "HwVersion", data: "V1.4"}, {type: "FwVersion", data: "V1.3.0"},
+      {type: "Defect", data: "defect C1"}, {type: "FwVersion", data: "V1.3.1"},
+      {type: "Defect", data: "connector broken"},
+      {type: "FwVersion", data: "V1.3.2"}, {type: "Remark", data: "Reserve"},
+      {type: "FwVersion", data: "V1.3.4"}, {type: "HwVersion", data: "V1.4.1"}
+    ];

@@ -121,10 +121,10 @@ export const MY_FORMATS = {
     jwtInterceptorProvider,
 
     // hook-in fake backend
-    fakeBackendProvider,
+    // fakeBackendProvider,
 
     // hook-in fake login provider
-    fakeLoginProvider
+    // fakeLoginProvider
   ],
   bootstrap: [AppComponent]
 })
