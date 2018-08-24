@@ -54,6 +54,7 @@ export class ProjectListComponent implements OnInit {
 
   updateDeviceList(model: ProjectModel) {
     model.loading = true;
+    console.log(`Hurray: project id ${model.project.id}`);
     this.deviceService.getDeviceList(model.project.id)
       .subscribe(
         deviceList => {
@@ -65,8 +66,9 @@ export class ProjectListComponent implements OnInit {
   }
 
   onAddDevice(projectModel: ProjectModel) {
-    this.deviceService.addDevice(projectModel.project).subscribe(any =>
-      this.updateDeviceList(projectModel)
+    this.deviceService.addDevice(projectModel.project).subscribe(any => {
+      this.updateDeviceList(projectModel);
+    }
     );
   }
 

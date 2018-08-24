@@ -92,6 +92,16 @@ export class FakeBackendInterceptor implements HttpInterceptor {
           newdevice.sn = project.lastDeviceSn;
           newdevice.projectId = projectIndex;
           newdevice.production_date = new Date();
+
+          devices.push({
+            id: newdevice.id,
+            project: newdevice.projectId,
+            sn: newdevice.sn,
+            production_date: newdevice.production_date.toDateString(),
+            hwVersion: newdevice.hwVersion,
+            fwVersion: newdevice.fwVersion
+          });
+
           return of(new HttpResponse({ status: 200, body: newdevice }));
         }
 
