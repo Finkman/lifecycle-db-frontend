@@ -24,18 +24,30 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       mergeMap(() => {
 
         if (request.url.indexOf('/api/devices.php') != -1) {
+          console.log(request.url);
           let lastIndex = request.url.indexOf('?project=');
           let body = [];
-          if (lastIndex == -1) {
-            console.log('fake: get all devices');
-            body = devices;
-          } else {
+          if (lastIndex != -1) {
             let projectIndex = +request.url.substr(lastIndex + 9);
             console.log(`fake: get devices for project ${projectIndex}`);
             if (projectIndex == NaN) {
               return throwError('given project is no index number');
             }
             body = devices.filter(d => d.project == projectIndex);
+          } else {
+            lastIndex = request.url.indexOf('?device=');
+            if (lastIndex != -1) {
+              let deviceIndex = +request.url.substr(lastIndex + 8);
+              console.log(`fake: get device with id ${deviceIndex}`);
+              if (deviceIndex == NaN) {
+                return throwError('given device id is not a number');
+              }
+              body = [devices.find(d => d.id == deviceIndex)];
+            }
+            else {
+              console.log('fake: get all devices');
+              body = devices;
+            }
           }
 
           return of(new HttpResponse({ status: 200, body: body }));
