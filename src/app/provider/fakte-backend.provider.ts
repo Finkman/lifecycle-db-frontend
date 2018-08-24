@@ -59,6 +59,34 @@ export class FakeBackendInterceptor implements HttpInterceptor {
           return of(new HttpResponse({ status: 200, body: body }));
         }
 
+        if (request.url.endsWith('/api/entryTypes.php')) {
+          let types: String[] = [];
+          entries.forEach(e => {
+            if (!types.includes(e.type)) {
+              types.push(e.type)
+            }
+          });
+          return of(new HttpResponse({ status: 200, body: types }));
+        }
+
+        if (request.url.includes('/api/dataTags.php')) {
+          const key = '?type=';
+          const lastIndex = request.url.indexOf(key);
+          if (lastIndex == -1) {
+            return throwError('no type given');
+          }
+
+          const typeKey = request.url.substr(lastIndex + key.length);
+          interface DataTags { type: String, data: String };
+          let dataTags: DataTags[] = [];
+          entries.forEach(e => {
+            if (e.type == typeKey && !dataTags.some(d => d.data == e.data && d.type == e.type) {
+              dataTags.push({ type: e.type, data: e.data });
+            }
+          });
+          return of(new HttpResponse({ status: 200, body: dataTags }));
+        }
+
         if (request.url.endsWith('/api/projects.php')) {
           let body = projects;
           console.log("fake: project list");
