@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 
-import { MatTableDataSource, MatSort } from '@angular/material';
+import {MatTableDataSource, MatSort} from '@angular/material';
 
-import { DeviceService } from '../device.service';
-import { Device } from '../device';
-import { OrderPipe } from 'ngx-order-pipe';
+import {DeviceService} from '../device.service';
+import {Device} from '../device';
+import {OrderPipe} from 'ngx-order-pipe';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-device-list',
@@ -17,20 +18,26 @@ export class DeviceListComponent implements OnInit {
   dataSource = new MatTableDataSource([]);
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private orderPipe: OrderPipe, private deviceService: DeviceService) { }
+  projectId: number = null;
+
+  constructor(
+      private orderPipe: OrderPipe, private deviceService: DeviceService,
+      private route: ActivatedRoute) {}
 
   ngOnInit() {
+    let projectParam = this.route.snapshot.paramMap.get('projectId');
+    if (projectParam != null) {
+      this.projectId = +projectParam;
+    }
     this.getDeviceList();
   }
 
   getDeviceList(): void {
     this.isLoading = true;
-    this.deviceService.getDeviceList().
-      subscribe((list) => {
-        this.dataSource = new MatTableDataSource(list);
-        this.dataSource.sort = this.sort;
-        this.isLoading = false;
-      });
+    this.deviceService.getDeviceList(this.projectId).subscribe((list) => {
+      this.dataSource = new MatTableDataSource(list);
+      this.dataSource.sort = this.sort;
+      this.isLoading = false;
+    });
   }
-
 }

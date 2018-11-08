@@ -17,7 +17,8 @@
         <!-- id Column -->
         <ng-container matColumnDef="sn">
           <mat-header-cell *matHeaderCellDef> S/N </mat-header-cell>
-          <mat-cell *matCellDef="let element"><a routerLink="/entries/{{element.id}}"> {{element.sn}} </a></mat-cell>
+          <mat-cell *matCellDef="let element"><a [routerLink]="['/entries', {deviceId: element.id}]"> {{element.sn}}
+            </a></mat-cell>
         </ng-container>
 
         <!-- date Column -->

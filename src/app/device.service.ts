@@ -60,6 +60,7 @@ export class DeviceService {
 
   getDeviceList(project?: number): Observable<Device[]> {
     let url = this.devicesUrl;
+    this.log(`fetch for project @id=${project}`);
     if (project) {
       url = url.concat(`?project=${project}`);
     }
@@ -97,6 +98,14 @@ export class DeviceService {
         .pipe(
             tap(entry => this.log('get projects')),
             catchError(this.handleError<Project[]>('getProjects')))
+  }
+
+  getProject(projectId: Number): Observable<Project> {
+    const url = `${this.entryProjectsUrl}?id=${projectId}`;
+    return this.http.get<Project>(url).pipe(
+        tap(d => this.log(`fetch project ${projectId}`)),
+        catchError(this.handleError('getProject @id: ${id}', [])),
+        map(d => d[0] as Project));
   }
 
   addDevice(project: Project): Observable<any> {
