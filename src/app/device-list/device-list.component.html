@@ -4,6 +4,10 @@
     <mat-spinner></mat-spinner>
   </div>
 
+  <mat-card *ngIf="parentProjectAvailable">
+    {{parentProject.name}}
+  </mat-card>
+
 
   <mat-table #table [dataSource]="dataSource" matSort>
 

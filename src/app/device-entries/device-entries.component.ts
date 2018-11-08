@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 
 import {MatTableDataSource, MatSort} from '@angular/material';
 
-import {DeviceEntry, Device} from '../device';
+import {DeviceEntry, Device, Project} from '../device';
 import {DeviceService} from '../device.service';
 import {AuthenticationService} from '../authentication.service';
 
@@ -28,11 +28,13 @@ export class DeviceEntriesComponent implements OnInit {
   parentDevice: Device = new Device();
 
   addEntryVisible: boolean;
+  _parentProject: Project = null;
+  parentProjectAvailable: boolean;
 
   constructor(
       private orderPipe: OrderPipe, private deviceService: DeviceService,
       private authenticationService: AuthenticationService,
-      private location: Location, private route: ActivatedRoute, ) {}
+      private route: ActivatedRoute, ) {}
 
   ngOnInit() {
     const userLevel = this.authenticationService.getCurrentUser().level;
@@ -42,6 +44,10 @@ export class DeviceEntriesComponent implements OnInit {
     this.deviceId = +this.route.snapshot.paramMap.get('deviceId');
     this.getDevice();
     this.getDeviceEntries();
+  }
+  getProjectInfo(projectId: number): void {
+    this.deviceService.getProject(projectId).subscribe(
+        p => this.parentProject = p);
   }
 
   getDeviceEntries(): void {
@@ -54,11 +60,18 @@ export class DeviceEntriesComponent implements OnInit {
 
   getDevice(): void {
     console.log(this.deviceId);
-    this.deviceService.getDevice(this.deviceId)
-        .subscribe(d => this.parentDevice = d as Device);
+    this.deviceService.getDevice(this.deviceId).subscribe(d => {
+      this.parentDevice = d as Device;
+      this.getProjectInfo(this.parentDevice.projectId);
+    });
   }
 
-  goBack(): void { this.location.back(); }
+  get parentProject(): Project { return this._parentProject; }
+
+  set parentProject(p: Project) {
+    this._parentProject = p;
+    this.parentProjectAvailable = p != null;
+  }
 
   newEntry(): void { this.addEntryVisible = true; }
 

@@ -1,4 +1,6 @@
-<button class="btn" (click)="goBack()">&#8592;</button>
+<mat-card *ngIf="parentProjectAvailable">
+  <h2><a [routerLink]="['/devicelist', {projectId: parentProject.id}]">{{parentProject.name}}</a></h2>
+</mat-card>
 <mat-card>
   <mat-card-title>Device Entries for S/N {{this.parentDevice.sn}}</mat-card-title>
 
@@ -34,8 +36,8 @@
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
     <div *ngIf="canAddEntries">
-    <button class="btn" *ngIf="!addEntryVisible" (click)="newEntry()">+</button>
-    <app-add-device-entry *ngIf="addEntryVisible" [deviceId]="deviceId" (onAdded)="onAdded($event)"></app-add-device-entry>
+      <button class="btn" *ngIf="!addEntryVisible" (click)="newEntry()">+</button>
+      <app-add-device-entry *ngIf="addEntryVisible" [deviceId]="deviceId" (onAdded)="onAdded($event)"></app-add-device-entry>
     </div>
   </mat-card-content>
 </mat-card>
