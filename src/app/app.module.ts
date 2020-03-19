@@ -1,31 +1,31 @@
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
 
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import {AppComponent} from './app.component';
-import {HttpClientModule} from '@angular/common/http';
+import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
 import {
   DeviceEntriesComponent
 } from './device-entries/device-entries.component';
-import {AppRoutingModule} from './app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
 
-import {AuthGuard} from './guard/auth.guard';
+import { AuthGuard } from './guard/auth.guard';
 
-import {DeviceService} from './device.service';
-import {AuthenticationService} from './authentication.service';
-import {DeviceListComponent} from './device-list/device-list.component';
+import { DeviceService } from './device.service';
+import { AuthenticationService } from './authentication.service';
+import { DeviceListComponent } from './device-list/device-list.component';
 import {
   AddDeviceEntryComponent
 } from './add-device-entry/add-device-entry.component';
-import {LoginComponent} from './login/login.component';
+import { LoginComponent } from './login/login.component';
 
-import {DatePipe} from '@angular/common';
-import {OrderModule} from 'ngx-order-pipe';  // <- import OrderModule
+import { DatePipe } from '@angular/common';
+import { OrderModule } from 'ngx-order-pipe';  // <- import OrderModule
 
-import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
-import {LayoutModule, MediaMatcher} from '@angular/cdk/layout';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { LayoutModule, MediaMatcher } from '@angular/cdk/layout';
 
 import {
   MatInputModule,
@@ -50,25 +50,25 @@ import {
   MatIconModule
 } from '@angular/material';
 
-import {MomentDateAdapter} from '@angular/material-moment-adapter';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import {
   DateAdapter,
   MAT_DATE_FORMATS,
   MAT_DATE_LOCALE
 } from '@angular/material/core';
-import {ProjectListComponent} from './project-list/project-list.component';
+import { ProjectListComponent } from './project-list/project-list.component';
 
-import {jwtInterceptorProvider} from './provider/JwtInterceptor';
+import { jwtInterceptorProvider } from './provider/JwtInterceptor';
 
-import {fakeBackendProvider} from './provider/fakte-backend.provider';
-import {fakeLoginProvider} from './provider/fake-login.provider';
-import {UserListComponent} from './user-list/user-list.component';
-import {AddUserComponent} from './add-user/add-user.component';
+import { fakeBackendProvider } from './provider/fakte-backend.provider';
+import { fakeLoginProvider } from './provider/fake-login.provider';
+import { UserListComponent } from './user-list/user-list.component';
+import { AddUserComponent } from './add-user/add-user.component';
 
 // See the Moment.js docs for the meaning of these formats:
 // https://momentjs.com/docs/#/displaying/format/
 export const MY_FORMATS = {
-  parse: {dateInput: 'DD-MM-YYYY'},
+  parse: { dateInput: 'DD-MM-YYYY' },
   display: {
     dateInput: 'DD-MM-YYYY',
     monthYearLabel: 'MMM YYYY',
@@ -115,16 +115,16 @@ export const MY_FORMATS = {
       useClass: MomentDateAdapter,
       deps: [MAT_DATE_LOCALE]
     },
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
 
     // to provide auth-token
     jwtInterceptorProvider,
 
     // hook-in fake backend
-    // fakeBackendProvider,
+    fakeBackendProvider,
 
     // hook-in fake login provider
-    // fakeLoginProvider
+    fakeLoginProvider
   ],
   bootstrap: [AppComponent]
 })

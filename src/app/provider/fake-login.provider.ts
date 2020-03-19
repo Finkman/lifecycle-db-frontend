@@ -23,8 +23,8 @@ export class FakeLoginProvider implements HttpInterceptor {
 
         if (request.url.endsWith('/api/authenticate.php') &&
           request.method === 'POST') {
-          // console.log(`fake: login requested for
-          // ${request.body.passwordHash}`);
+          console.log(`fake: login requested for
+          ${request.body.username}`);
           // find if any user matches login
           let filteredUsers = fakedUsers.filter(user => {
             return user.username === request.body.username &&
