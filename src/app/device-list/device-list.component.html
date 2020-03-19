@@ -14,7 +14,8 @@
     <!-- id Column -->
     <ng-container matColumnDef="sn">
       <mat-header-cell *matHeaderCellDef mat-sort-header> S/N </mat-header-cell>
-      <mat-cell *matCellDef="let element"><a [routerLink]="['/entries', {deviceId: element.id}]"> {{element.sn}} </a></mat-cell>
+      <mat-cell *matCellDef="let element"><a [routerLink]="['/entries', {deviceId: element.id}]"> {{element.sn}} </a>
+      </mat-cell>
     </ng-container>
 
     <!-- date Column -->
@@ -33,6 +34,12 @@
     <ng-container matColumnDef="fwVersion">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Fw-Version </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.fwVersion}} </mat-cell>
+    </ng-container>
+
+    <!-- location Column -->
+    <ng-container matColumnDef="location">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Location </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.location}} </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

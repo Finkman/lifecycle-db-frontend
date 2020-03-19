@@ -1,11 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-
-import {MatTableDataSource, MatSort} from '@angular/material';
-
-import {DeviceService} from '../device.service';
-import {Device, Project} from '../device';
-import {OrderPipe} from 'ngx-order-pipe';
+import {MatSort, MatTableDataSource} from '@angular/material';
 import {ActivatedRoute} from '@angular/router';
+import {OrderPipe} from 'ngx-order-pipe';
+
+import {Device, Project} from '../device';
+import {DeviceService} from '../device.service';
 
 @Component({
   selector: 'app-device-list',
@@ -14,7 +13,8 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class DeviceListComponent implements OnInit {
   isLoading: boolean = false;
-  displayedColumns = ['sn', 'production_date', 'hwVersion', 'fwVersion'];
+  displayedColumns =
+      ['sn', 'production_date', 'hwVersion', 'fwVersion', 'location'];
   dataSource = new MatTableDataSource([]);
   @ViewChild(MatSort) sort: MatSort;
 
@@ -34,7 +34,9 @@ export class DeviceListComponent implements OnInit {
     }
   }
 
-  get parentProject(): Project { return this._parentProject; }
+  get parentProject(): Project {
+    return this._parentProject;
+  }
 
   set parentProject(p: Project) {
     this._parentProject = p;

@@ -24,6 +24,7 @@ export class Device {
   production_date: Date;
   hwVersion: string;
   fwVersion: string;
+  location: string;
 }
 
 export class Project {
